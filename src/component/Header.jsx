@@ -1,6 +1,23 @@
-import { NavLink } from "react-router"
+import { Link, NavLink } from "react-router"
 import logo from "../assets/logo.svg";
 import Search from "./Search";
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import { IoMdHeartEmpty } from "react-icons/io";
+
+
+import { IoCartOutline, IoGitCompareOutline } from "react-icons/io5";
+import { Tooltip } from "@mui/material";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 const Header = () => {
     return (
         <header>
@@ -20,7 +37,6 @@ const Header = () => {
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -34,7 +50,41 @@ const Header = () => {
                     <div className="col2 w-[45%]">
                         <Search />
                     </div>
-                    <div className="col3 w-[30%]"></div>
+                    <div className="col3 w-[30%] flex items-center">
+                        <ul className="flex items-center gap-2 pl-7">
+                            <li>
+                                <Link className="transition text-[15px] font-[500] hover:text-primary" to="/login">Sign In</Link> | <Link className="transition text-[15px] font-[500] hover:text-primary " to="/register">Register</Link>
+                            </li>
+                            <li>
+                                <Tooltip title="Compare" placement="bottom">
+                                <IconButton aria-label="cart">
+                                    <Badge badgeContent={4} classes={{badge:"bg-primary text-white"}}>
+                                        <IoGitCompareOutline />
+                                    </Badge>
+                                </IconButton>
+                                </Tooltip>
+                            </li>
+                            <li>
+                               <Tooltip title="Cart" placement="bottom">
+                                 <IconButton aria-label="cart">
+                                    <Badge badgeContent={4} classes={{badge:"bg-primary text-white"}}>
+                                        <IoCartOutline />
+                                    </Badge>
+                                </IconButton>
+                               </Tooltip>
+                            </li>
+                            
+                            <li>
+                                <Tooltip title="Wishlist" placement="bottom">
+                                <IconButton aria-label="cart">
+                                    <Badge badgeContent={7} classes={{badge:"bg-primary text-white"}}>
+                                        <IoMdHeartEmpty />
+                                    </Badge>
+                                </IconButton>
+                                </Tooltip>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
