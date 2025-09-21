@@ -9,6 +9,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 import { IoCartOutline, IoGitCompareOutline } from "react-icons/io5";
 import { Tooltip } from "@mui/material";
+import Navigation from "./Navigation";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -40,7 +41,8 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <div className="header py-3">
+
+            <div className="header py-3 border-b-[1px] border-gray-300">
                 <div className="container flex items-center justify-between">
                     <div className="col1 w-[25%]">
                         <NavLink to="">
@@ -87,6 +89,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            <Navigation />
         </header>
     )
 }
