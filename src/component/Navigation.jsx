@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import { GoRocket } from "react-icons/go"
 import { IoChevronDown } from "react-icons/io5"
 import { RiMenu2Fill } from "react-icons/ri"
-import { NavLink } from "react-router"
+import { Link, NavLink } from "react-router"
 import CategorySidebar from "./CategorySidebar"
 import { useState } from "react"
 const Navigation = () => {
@@ -21,11 +21,11 @@ const Navigation = () => {
         <nav>
             <div className="container flex items-center justify-end gap-8">
                 <div className="col-1 w-[20%] " onClick={handleSidebar} >
-                    <Button className="gap-2 flex"><RiMenu2Fill  className="text-black w-[22px] h-[22px]" />
+                    <Button className="gap-2 flex"><RiMenu2Fill className="text-black w-[22px] h-[22px]" />
                         <span className="text-black font-bold font14"> SHOP BY CATEGORY </span><IoChevronDown className="text-black ml-4 font-medium" /></Button>
                 </div>
                 <div className="col-2 w-[60%]">
-                    <ul className="flex item-center gap-5">
+                    <ul className="flex item-center gap-5 nav">
                         <li className="list-none">
                             <NavLink
                                 to="/"
@@ -35,19 +35,161 @@ const Navigation = () => {
                             >
                                 Home
                             </NavLink>
-
-
-
                         </li>
-                        <li className="list-none">
+                        <li className="list-none relative">
                             <NavLink to="/fashion" className={({ isActive }) =>
                                 `link transition font-medium ${isActive ? "text-primary border-b" : ""}`
                             }>Fashion</NavLink>
+                            <div className="submenu absolute top-[100%] left-[0%] min-w-[150px]  shadow-md hidden transition-all" >
+                                <ul>
+                                    <Link to="/">
+                                        <li className="list-none w-full relative">
+                                            <Button className=" w-full !justify-start">Men</Button>
+                                            <div className="subbmenu absolute top-0 left-[100%] min-w-[150px]  shadow-md hidden transition-all" >
+                                                <ul>
+                                                    <Link to="/">
+                                                        <li className="list-none w-full">
+                                                            <Button className=" w-full !justify-start">Men</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start" >Women</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start">Kids</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start">Girls</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start rounded-non">Boys</Button>
+                                                        </li>
+                                                    </Link>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start" >Women</Button>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start">Kids</Button>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start">Girls</Button>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start rounded-non">Boys</Button>
+                                        </li>
+                                    </Link>
+                                </ul>
+                            </div>
                         </li>
-                        <li className="list-none">
-                            <NavLink to="/electronics" className={({ isActive }) =>
+                       <li className="list-none relative">
+                            <NavLink to="/electronic" className={({ isActive }) =>
                                 `link transition font-medium ${isActive ? "text-primary border-b" : ""}`
-                            }>Electronics</NavLink>
+                            }>Electronic</NavLink>
+                            <div className="submenu absolute top-[100%] left-[0%] min-w-[150px]  shadow-md hidden transition-all" >
+                                <ul>
+                                    <Link to="/">
+                                        <li className="list-none w-full relative">
+                                            <Button className=" w-full !justify-start">Men</Button>
+                                            <div className="subbmenu absolute top-[0] left-[100%] min-w-[150px]  shadow-md hidden transition-all" >
+                                                <ul>
+                                                    <Link to="/">
+                                                        <li className="list-none w-full">
+                                                            <Button className=" w-full !justify-start ">Men</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start" >Women</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start">Kids</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start">Girls</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start rounded-non">Boys</Button>
+                                                        </li>
+                                                    </Link>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start" >Women</Button>
+                                             <div className="subbmenu absolute top-[0] left-[100%] min-w-[150px]  shadow-md hidden transition-all" >
+                                                <ul>
+                                                    <Link to="/">
+                                                        <li className="list-none w-full">
+                                                            <Button className=" w-full !justify-start ">Menn</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start" >Women</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start">Kids</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start">Girls</Button>
+                                                        </li>
+                                                    </Link>
+                                                    <Link to="/">
+                                                        <li className="list-none">
+                                                            <Button className=" w-full !justify-start rounded-non">Boys</Button>
+                                                        </li>
+                                                    </Link>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start">Kids</Button>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start">Girls</Button>
+                                        </li>
+                                    </Link>
+                                    <Link to="/">
+                                        <li className="list-none">
+                                            <Button className=" w-full !justify-start rounded-non">Boys</Button>
+                                        </li>
+                                    </Link>
+                                </ul>
+                            </div>
                         </li>
                         <li className="list-none">
                             <NavLink to="/bag" className={({ isActive }) =>
