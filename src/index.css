@@ -49,6 +49,8 @@ header .top-strip {
 }
 .nav li:hover .submenu{
         display: block !important;
+        z-index: 99;
+        background-color: white;
 }
 
  .submenu ul a li button{
@@ -63,4 +65,5 @@ header .top-strip {
 .nav li .submenu ul li:hover .subbmenu{
     display: block !important;
     top:200x;
+    background-color: white;
 }
