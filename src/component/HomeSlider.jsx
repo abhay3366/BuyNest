@@ -12,12 +12,29 @@ import slider3 from "../assets/slider/slider3.webp"
 import { Navigation } from 'swiper/modules';
 const HomeSlider = () => {
     return (
-        <div> 
-            <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-                <SwiperSlide><img src={slider1} className='w-full' /></SwiperSlide>
-                <SwiperSlide><img src={slider2} className='w-full' /></SwiperSlide>
-                <SwiperSlide><img src={slider3} className='w-full' /></SwiperSlide>
-            </Swiper>
+        <div className='homeSlider py-4'>
+            <div className="container">
+                <Swiper navigation={true} modules={[Navigation]} spaceBetween={10} className="sliderHome">
+
+                    <SwiperSlide>
+                        <div className="item rounded-[20px] overflow-hidden">
+                            <img src={slider1} className='w-full' />
+                        </div>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <div className="item rounded-[20px] overflow-hidden">
+                            <img src={slider2} className='w-full' />
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="item rounded-[20px] overflow-hidden">
+                            <img src={slider3} className='w-full' />
+                        </div>
+                    </SwiperSlide>
+
+                </Swiper>
+            </div>
         </div>
     )
 }

@@ -15,55 +15,91 @@
     padding: 0x;
     box-sizing: border-box;
 } */
- .active{
+.active {
     color: #ff5252;
- }
+}
 
 .container {
     width: 98%;
     margin: auto;
 }
-.font15{
+
+.font15 {
     font-size: 15px;
 }
-.font14{
- font-size: 14px;
+
+.font14 {
+    font-size: 14px;
 }
 
 body {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-
+    overflow-x: hidden;
+    /* background-color: whitesmoke; */
 }
 
 header .top-strip {
     border-top: 1px solid rgba(0, 0 0, .0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.link{
+
+.link {
     font-size: 15px;
 }
 
 .link:hover {
     color: #ff5252;
 }
-.nav li:hover .submenu{
-        display: block !important;
-        z-index: 99;
-        background-color: white;
+
+.nav li:hover .submenu {
+    display: block !important;
+    z-index: 99;
+    background-color: white;
 }
 
- .submenu ul a li button{
-    color: rgba(0,0,0,0.8);
+.submenu ul a li button {
+    color: rgba(0, 0, 0, 0.8);
     font-weight: 500;
- }
- .submenu ul a li button:hover{
+}
+
+.submenu ul a li button:hover {
     color: #ff5252 !important;
 
- }
+}
 
-.nav li .submenu ul li:hover .subbmenu{
+.nav li .submenu ul li:hover .subbmenu {
     display: block !important;
-    top:200x;
+    top: 200x;
     background-color: white;
+}
+
+.sliderHome {
+    overflow: inherit !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    background-color: #ff5252;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    min-width: 45px;
+    height: 45px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.swiper-navigation-icon{
+     font-size: 22px !important;
+}
+.swiper-button-prev, .swiper-button-next {
+    svg {
+        width: 25% !important;
+        height: 100%;
+        object-fit: contain;
+        transform-origin: center;
+        fill: rgb(47 49 52);
+        color: darkslateblue;
+        pointer-events: none;
+    }
 }
