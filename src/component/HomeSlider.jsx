@@ -9,12 +9,15 @@ import slider3 from "../assets/slider/slider3.webp"
 
 
 // import required modules
-import { Navigation } from 'swiper/modules';
+import {Autoplay, Navigation } from 'swiper/modules';
 const HomeSlider = () => {
     return (
         <div className='homeSlider py-4'>
             <div className="container">
-                <Swiper navigation={true} modules={[Navigation]} spaceBetween={10} className="sliderHome">
+                <Swiper navigation={true} modules={[Autoplay,Navigation]} autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }} spaceBetween={10} className="sliderHome">
 
                     <SwiperSlide>
                         <div className="item rounded-[20px] overflow-hidden">

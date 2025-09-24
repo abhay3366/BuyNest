@@ -80,15 +80,16 @@ header .top-strip {
 
 .swiper-button-prev,
 .swiper-button-next {
-    background-color: #ff5252;
+    background-color: #fdfcfc;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 100%;
     min-width: 45px;
     height: 45px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
 .swiper-navigation-icon{
      font-size: 22px !important;
 }

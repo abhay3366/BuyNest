@@ -11,7 +11,7 @@ import { Mousewheel,Pagination } from "swiper/modules";
 
 const HomeCartSlider = () => {
   return (
-    <div className="homeCartSlider py-6">
+    <div className="homeCartSlider py-8 pt-4">
       <div className="container">
         <Swiper
           slidesPerView={7}
