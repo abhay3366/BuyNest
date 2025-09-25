@@ -3,6 +3,9 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home";
 import HelpCenter from "../pages/HelpCenter";
 import TrackOrder from "../pages/TrackOrder";
+import SignIn from "../component/SignIn";
+import SignUp from "../component/signup";
+import Cart from "../component/Cart";
 
 
 const appRouter=createBrowserRouter([
@@ -22,6 +25,18 @@ const appRouter=createBrowserRouter([
             path:"/track_order",
             element:<TrackOrder/>
         },
+        {
+            path:"/login",
+            element:<SignIn/>
+        },
+        {
+          path:"/register",
+          element:<SignUp/>
+        },
+        {
+          path:"/cart",
+          element:<Cart/>
+        }
     ]
   }
 

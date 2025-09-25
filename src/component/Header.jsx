@@ -10,6 +10,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline, IoGitCompareOutline } from "react-icons/io5";
 import { Tooltip } from "@mui/material";
 import Navigation from "./Navigation";
+import { useState } from "react";
+import Cart from "./Cart";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -20,6 +22,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 const Header = () => {
+    // const [openCart,setOpenCart]=useState(false)
+
+      const [openCart, setOpenCart] = useState(false);
+
+        const handleCart = (value) => {
+            setOpenCart(value);
+        };
+    
+
     return (
         <header>
             <div className="top-strip py-4">
@@ -59,30 +70,32 @@ const Header = () => {
                             </li>
                             <li>
                                 <Tooltip title="Compare" placement="bottom">
-                                <IconButton aria-label="cart">
-                                    <Badge badgeContent={4} classes={{badge:"bg-primary text-white"}}>
-                                        <IoGitCompareOutline />
-                                    </Badge>
-                                </IconButton>
+                                    <IconButton aria-label="cart">
+                                        <Badge badgeContent={4} classes={{ badge: "bg-primary text-white" }}>
+                                            <IoGitCompareOutline />
+                                        </Badge>
+                                    </IconButton>
                                 </Tooltip>
                             </li>
                             <li>
-                               <Tooltip title="Cart" placement="bottom">
-                                 <IconButton aria-label="cart">
-                                    <Badge badgeContent={4} classes={{badge:"bg-primary text-white"}}>
-                                        <IoCartOutline />
-                                    </Badge>
-                                </IconButton>
-                               </Tooltip>
+                                <Tooltip title="Cart" placement="bottom">
+                                   
+                                        <IconButton aria-label="cart" onClick={handleCart}>
+                                            <Badge badgeContent={4} classes={{ badge: "bg-primary text-white" }}>
+                                                <IoCartOutline />
+                                            </Badge>
+                                        </IconButton>
+                                    
+                                </Tooltip>
                             </li>
-                            
+
                             <li>
                                 <Tooltip title="Wishlist" placement="bottom">
-                                <IconButton aria-label="cart">
-                                    <Badge badgeContent={7} classes={{badge:"bg-primary text-white"}}>
-                                        <IoMdHeartEmpty />
-                                    </Badge>
-                                </IconButton>
+                                    <IconButton aria-label="cart">
+                                        <Badge badgeContent={7} classes={{ badge: "bg-primary text-white" }}>
+                                            <IoMdHeartEmpty />
+                                        </Badge>
+                                    </IconButton>
                                 </Tooltip>
                             </li>
                         </ul>
@@ -90,6 +103,8 @@ const Header = () => {
                 </div>
             </div>
             <Navigation />
+
+            {openCart && <Cart handleCart={handleCart} setOpenCart={setOpenCart} openCart={openCart} />}
         </header>
     )
 }
