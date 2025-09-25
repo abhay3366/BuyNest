@@ -104,3 +104,10 @@ header .top-strip {
         pointer-events: none;
     }
 }
+.css-1qltlow-MuiTabs-indicator{
+    background-color: #ff5252 !important;
+}
+.Mui-selected{
+    color: #ff5252 !important;
+}
+
