@@ -3,11 +3,13 @@ import HomeSlider from '../component/HomeSlider'
 import CartSlider from '../component/HomeCartSlider'
 import { LiaShippingFastSolid } from 'react-icons/lia'
 import AddBannerSlider from '../component/AddBannerSlider'
+import watch from "../assets/watch.png"
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import ProductSlider from '../component/ProductSlider'
+import Blog from '../component/Blog'
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -19,6 +21,7 @@ const Home = () => {
     <div style={{ background: "#F7F4CA" }}>
       <HomeSlider />
       <CartSlider />
+      {/* POPULAR PRODUCT */}
       <section className='bg-white py-8'>
         <div className="container">
           <div className="flex items-center justify-between">
@@ -49,7 +52,7 @@ const Home = () => {
           <ProductSlider items={5}/>
         </div>
       </section>
-      <section className='py-18 bg-white '>
+      <section className='py-8 bg-white '>
         <div className="container">
           <div className="freeShipping w-full p-4 py-2 flex items-center justify-between border-2 border-red-600 rounded-md">
             <div className="col1 flex items-center gap-4">
@@ -64,6 +67,48 @@ const Home = () => {
         </div>
       </section>
       <AddBannerSlider />
+      {/* LATEST PRODUCT */}
+      <section className='bg-white py-8'>
+        <div className="container">
+          <div className="flex items-center justify-between">
+            <div className="leftSec">
+              <h2 className='font-[600] text-[20px]'>Latest Products</h2>
+            </div>
+          </div>
+          <ProductSlider items={5}/>
+        </div>
+      </section>
+      <section className='bg-white'>
+        <div className="container">
+          <img src={watch} alt="" />
+        </div>
+      </section>
+      {/* Featured Product */}
+       <section className='bg-white py-8'>
+        <div className="container">
+          <div className="flex items-center justify-between">
+            <div className="leftSec">
+              <h2 className='font-[600] text-[20px]'>Featured Products</h2>
+            </div>
+          </div>
+          <ProductSlider items={5}/>
+        </div>
+      </section>
+      <AddBannerSlider />
+      {/* Deal of the day */}
+       <section className='bg-white py-8'>
+        <div className="container">
+          <div className="flex items-center justify-between">
+            <div className="leftSec">
+              <h2 className='font-[600] text-[20px]'>Deal Of The Day</h2>
+            </div>
+          </div>
+          <ProductSlider items={5}/>
+        </div>
+      </section>
+     {/* blog card */}
+      <Blog/>
+      
     </div>
   )
 }

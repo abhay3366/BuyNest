@@ -5,8 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import ProductCard from "./ProductCard";
-const ProductSlider = ({ item }) => {
+import BlogCard from "./BlogCard";
+const Blog = ({ item }) => {
     return (
         <div className="container py-8">
             <Swiper
@@ -19,32 +19,30 @@ const ProductSlider = ({ item }) => {
             >
                 {/* Example slides */}
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <ProductCard />
+                    <BlogCard />
                 </SwiperSlide>
-                <SwiperSlide>
-                    <ProductCard />
-                </SwiperSlide>
+               
             </Swiper>
         </div>
     )
 }
 
-export default ProductSlider
+export default Blog

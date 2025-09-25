@@ -5,29 +5,29 @@ import { IoMdGitCompare } from 'react-icons/io'
 import { MdZoomOutMap } from 'react-icons/md'
 import { Link } from 'react-router'
 import { IconButton } from "@mui/material";
-const ProductSliderItem = () => {
+const ProductCard = () => {
     return (
         <div className="productItem w-[250px] rounded-md border-1 border-gray-300 shadow-md">
             <div className='imgWrapper group w-[100%]  overflow-hidden relative '>
                 <Link to="/">
                     <div className="img h-[250px] overflow-hidden group relative">
-  {/* First Image (fade out on hover) */}
-  <img
-    className="w-full h-full object-contain rounded-md absolute top-0 left-0 opacity-100 transition-all duration-300 ease-in-out group-hover:opacity-0"
-    src="https://www.jiomart.com/images/product/original/rv1zalfbjm/sidhidata-women-s-women-s-crepe-printed-patiyala-salwar-suit-dress-material-suit-sea-green-product-images-rv1zalfbjm-0-202406210004.jpg?im=Resize=(600,750)"
-    alt="Main Product"
-  />
+                        {/* First Image (fade out on hover) */}
+                        <img
+                            className="w-full h-full object-contain rounded-md absolute top-0 left-0 opacity-100 transition-all duration-300 ease-in-out group-hover:opacity-0"
+                            src="https://www.jiomart.com/images/product/original/rv1zalfbjm/sidhidata-women-s-women-s-crepe-printed-patiyala-salwar-suit-dress-material-suit-sea-green-product-images-rv1zalfbjm-0-202406210004.jpg?im=Resize=(600,750)"
+                            alt="Main Product"
+                        />
 
-  {/* Second Image (fade in on hover) */}
-  <img
-    className="w-full h-full object-contain rounded-md absolute top-0 left-0 opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
-    src="https://www.jiomart.com/images/product/original/rv1zalfbjm/sidhidata-women-s-women-s-crepe-printed-patiyala-salwar-suit-dress-material-suit-sea-green-product-images-rv1zalfbjm-2-202406210004.jpg?im=Resize=(600,750)"
-    alt="Hover Product"
-  />
-</div>
+                        {/* Second Image (fade in on hover) */}
+                        <img
+                            className="w-full h-full object-contain rounded-md absolute top-0 left-0 opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
+                            src="https://www.jiomart.com/images/product/original/rv1zalfbjm/sidhidata-women-s-women-s-crepe-printed-patiyala-salwar-suit-dress-material-suit-sea-green-product-images-rv1zalfbjm-2-202406210004.jpg?im=Resize=(600,750)"
+                            alt="Hover Product"
+                        />
+                    </div>
 
 
-               </Link>
+                </Link>
                 <span className='discount flex items-center absolute top-[10px] left-[10px] rounded-[3px] text-[12px] p-1 bg-primary text-white'>18%</span>
                 <div className='actions  absolute top-[10px] right-[5px] w-[80px] flex flex-col items-end gap-1 '>
                     <button
@@ -35,8 +35,8 @@ const ProductSliderItem = () => {
                     >
                         <FaRegHeart />
                     </button>
-                    <button  className="!w-[40px] !h-[40px] flex items-center justify-center !rounded-full bg-gray-100 hover:bg-primary hover:text-white text-black cursor-pointer"><IoMdGitCompare /></button>
-                    <button  className="!w-[40px] !h-[40px] flex items-center justify-center !rounded-full bg-gray-100 hover:bg-primary hover:text-white text-black cursor-pointer"><MdZoomOutMap /></button>
+                    <button className="!w-[40px] !h-[40px] flex items-center justify-center !rounded-full bg-gray-100 hover:bg-primary hover:text-white text-black cursor-pointer"><IoMdGitCompare /></button>
+                    <button className="!w-[40px] !h-[40px] flex items-center justify-center !rounded-full bg-gray-100 hover:bg-primary hover:text-white text-black cursor-pointer"><MdZoomOutMap /></button>
                 </div>
             </div>
             <div className="info p-3">
@@ -52,4 +52,4 @@ const ProductSliderItem = () => {
     )
 }
 
-export default ProductSliderItem
+export default ProductCard

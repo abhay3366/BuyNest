@@ -35,13 +35,6 @@ const AddBannerSlider = () => {
                  <SwiperSlide>
                     <BannerBox url={subbanner} />
                 </SwiperSlide>
-
-
-
-
-
-
-
             </Swiper>
         </div>
     );
