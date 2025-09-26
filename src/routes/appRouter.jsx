@@ -7,6 +7,7 @@ import SignIn from "../component/SignIn";
 import SignUp from "../component/signup";
 import Cart from "../component/Cart";
 import ProductListing from "../component/ProductListing";
+import ViewCart from "../component/ViewCart";
 
 
 const appRouter=createBrowserRouter([
@@ -41,6 +42,10 @@ const appRouter=createBrowserRouter([
         {
           path:"/cart",
           element:<Cart/>
+        },
+        {
+          path:"/viewCart",
+          element:<ViewCart/>
         }
     ]
   }

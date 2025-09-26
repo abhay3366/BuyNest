@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import { RxCross2 } from 'react-icons/rx';
 import { MdDelete } from 'react-icons/md';
+import { Link } from 'react-router';
 
 export default function Cart({ handleCart, openCart }) {
     const DrawerList = (
@@ -90,10 +91,14 @@ export default function Cart({ handleCart, openCart }) {
                     <span className="text-red-500">$8</span>
                 </div>
                 <div className='flex justify-center gap-4'>
-                    <button className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
-                    <button className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
+                   <Link to="/viewCart">
+                     <button className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
+                   </Link>
+                   <Link to="/">
+                     <button className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
                         Checkout
                     </button>
+                   </Link>
                 </div>
             </div>
         </Box>
