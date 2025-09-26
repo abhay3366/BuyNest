@@ -37,7 +37,7 @@ const Navigation = () => {
                             </NavLink>
                         </li>
                         <li className="list-none relative">
-                            <NavLink to="/fashion" className={({ isActive }) =>
+                            <NavLink to="/productListing" className={({ isActive }) =>
                                 `link transition font-medium ${isActive ? "text-primary border-b" : ""}`
                             }>Fashion</NavLink>
                             <div className="submenu absolute top-[100%] left-[0%] min-w-[150px]  shadow-md hidden transition-all" >

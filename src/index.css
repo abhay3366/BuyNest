@@ -111,3 +111,7 @@ header .top-strip {
     color: #ff5252 !important;
 }
 
+    .customCheck {
+        accent-color: rgb(212, 112, 18) !important; 
+    }
+

@@ -21,7 +21,7 @@ const SignUp = () => {
             <input
               type="text"
               id="name"
-              placeholder="John Doe"
+              placeholder="Abhay"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
