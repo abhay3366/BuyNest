@@ -114,4 +114,8 @@ header .top-strip {
     .customCheck {
         accent-color: rgb(212, 112, 18) !important; 
     }
+    .placeOrder{
+        
+      box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+    }
 
