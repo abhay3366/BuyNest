@@ -92,7 +92,7 @@ export default function Cart({ handleCart, openCart }) {
                 </div>
                 <div className='flex justify-center gap-4'>
                    <Link to="/viewCart">
-                     <button className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
+                     <button  onClick={() => handleCart(false)} className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
                    </Link>
                    <Link to="/">
                      <button className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
