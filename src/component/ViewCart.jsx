@@ -9,7 +9,7 @@ const ViewCart = () => {
                 <div className="py-4 w-[70%]">
                     <div className="bg-white flex items-center justify-between p-3 rounded-md shadow-sm">
                         <h3 className="font-medium">From Saved Addresses</h3>
-                        <button className="border border-gray-300 py-1 px-4 text-blue-600 font-semibold rounded">
+                        <button className="border border-gray-300 py-1 px-4 text-blue-600 font-semibold rounded cursor-pointer">
                             Enter Delivery Pincode
                         </button>
                     </div>
@@ -103,7 +103,7 @@ const ViewCart = () => {
                 </div>
 
                 {/* Right Sidebar */}
-                <div className="w-[29%]  mt-4 bg-white p-3 rounded-lg shadow">
+                <div className="w-[29%] max-h-[380px]  mt-4 bg-white p-3 rounded-lg shadow">
                     <h1 className="text-gray-500 font-semibold p-2">PRICE DETAILS</h1>
                     <Divider />
 

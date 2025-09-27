@@ -8,6 +8,7 @@ import SignUp from "../component/signup";
 import Cart from "../component/Cart";
 import ProductListing from "../component/ProductListing";
 import ViewCart from "../component/ViewCart";
+import Verify from "../component/Verify";
 
 
 const appRouter=createBrowserRouter([
@@ -46,6 +47,10 @@ const appRouter=createBrowserRouter([
         {
           path:"/viewCart",
           element:<ViewCart/>
+        },
+         {
+          path:"/verify",
+          element:<Verify/>
         }
     ]
   }

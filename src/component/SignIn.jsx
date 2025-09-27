@@ -1,7 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { IoEyeOutline } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const [showPassword,hidePassword]=useState(false)
+  const navigate=useNavigate();
+
+  const inputRef=useRef(null)
+  
+  const forgotPassword=(e)=>{
+    e.preventDefault();
+    if(inputRef.current.type=="email"){
+      if(inputRef.current.value){
+        console.log("d")
+        navigate("/verify")
+      }
+    }
+    console.log(inputRef.current.type)
+  }
+  const handleIcon=()=>{
+    hidePassword(!showPassword)
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
@@ -21,22 +41,28 @@ const SignIn = () => {
             <input
               type="email"
               id="email"
+              ref={inputRef}
+              name="email"
               placeholder="abhaykanttiwari9595@gmail.com"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Password */}
-          <div>
+          <div className="relative">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword==true?"text":"password"}
               id="password"
               placeholder="••••••••"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              
             />
+            <span onClick={handleIcon} className="absolute top-1/2 right-0 cursor-pointer p-1 w-[30px]">
+            {showPassword==true ? <FaRegEye/> : <FaRegEyeSlash />} </span>
+            
           </div>
 
           {/* Remember + Forgot */}
@@ -45,7 +71,7 @@ const SignIn = () => {
               <input type="checkbox" className="rounded border-gray-300" />
               Remember me
             </label>
-            <Link to="/forgot-password" className="text-indigo-600 hover:underline">
+            <Link  onClick={forgotPassword} className="text-indigo-600 hover:underline">
               Forgot password?
             </Link>
           </div>
