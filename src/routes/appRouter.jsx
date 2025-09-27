@@ -10,6 +10,8 @@ import ProductListing from "../component/ProductListing";
 import ViewCart from "../component/ViewCart";
 import Verify from "../component/Verify";
 import ForgotPassword from "../component/ForgotPassword";
+import Checkout from "../component/Checkout";
+import MyAccount from "../pages/MyAccount";
 
 
 const appRouter=createBrowserRouter([
@@ -56,6 +58,14 @@ const appRouter=createBrowserRouter([
         {
           path:"/forgot-password",
           element:<ForgotPassword/>
+        },
+         {
+          path:"/checkout",
+          element:<Checkout/>
+        },
+        {
+          path:"/my-account",
+          element:<MyAccount/>
         }
     ]
   }

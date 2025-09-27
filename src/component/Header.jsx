@@ -7,11 +7,23 @@ import IconButton from '@mui/material/IconButton';
 import { IoMdHeartEmpty } from "react-icons/io";
 
 
-import { IoCartOutline, IoGitCompareOutline } from "react-icons/io5";
+import { IoCartOutline, IoGitCompareOutline, IoLogOut, IoSettings } from "react-icons/io5";
 import { Tooltip } from "@mui/material";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Cart from "./Cart";
+import { useSelector } from "react-redux";
+import { FaCheckSquare, FaFirstOrder, FaHeart, FaUser, FaUserCircle } from "react-icons/fa";
+
+
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import { GoListOrdered, GoPersonAdd } from "react-icons/go";
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -22,14 +34,23 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 const Header = () => {
-    // const [openCart,setOpenCart]=useState(false)
+    const [openCart, setOpenCart] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const userLogin = useSelector((state) => state.auth.userLogin)
+   
 
-      const [openCart, setOpenCart] = useState(false);
+    const handleCart = (value) => {
+        setOpenCart(value);
+    };
 
-        const handleCart = (value) => {
-            setOpenCart(value);
-        };
-    
+
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <header>
@@ -66,7 +87,65 @@ const Header = () => {
                     <div className="col3 w-[30%] flex items-center">
                         <ul className="flex items-center gap-2 pl-7">
                             <li>
-                                <Link className="transition text-[15px] font-[500] hover:text-primary" to="/login">Sign In</Link> | <Link className="transition text-[15px] font-[500] hover:text-primary " to="/register">Register</Link>
+                                {userLogin == false ? (<> <Link className="transition text-[15px] font-[500] hover:text-primary" to="/login">Sign In</Link> | <Link className="transition text-[15px] font-[500] hover:text-primary " to="/register">Register</Link>
+
+                                </>) : (<>
+                                   <button className="cursor-pointer flex gap-1" onClick={handleClick}>
+                                     <FaUserCircle className="text-2xl cursor-pointer "  />
+                                    <h1>Abhay Kant tiwari</h1>
+                                   </button>
+                                    <Menu
+                                        anchorEl={anchorEl}
+                                        id="account-menu"
+                                        open={open}
+                                        onClose={handleClose}
+                                        onClick={handleClose}
+
+                                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                    >
+                                         <MenuItem>
+                                            <ListItemIcon>
+                                                <FaUserCircle className="text-xl" />
+                                            </ListItemIcon>
+                                           <div className="leading-4">
+                                            <h1 className="text-[15px]">Abhay Kant Tiwari</h1>
+                                            <h3 className="text-[13px] text-gray-400">tabhaykant1@gmail.com</h3>
+                                           </div>
+                                        </MenuItem>   
+                                         <MenuItem>
+                                            <Link to='/my-account' className="flex">
+                                                <ListItemIcon>
+                                                <FaUser className="text-xl" />
+                                            </ListItemIcon>
+                                           <div>
+                                             <h1 className="text-[15px]">My Account</h1>
+                                           </div>
+                                            </Link>
+                                        </MenuItem>   
+                                         <MenuItem>
+                                            
+                                        </MenuItem>  
+                                        <MenuItem>
+                                            <Link to="/" className="flex">
+                                                <ListItemIcon>
+                                                <FaHeart className="text-xl" />
+                                            </ListItemIcon>
+                                           <div>
+                                             <h1 className="text-[15px]">My List</h1>
+                                           </div>
+                                            </Link>
+                                        </MenuItem>    
+                                        
+                                        <MenuItem onClick={handleClose}>
+                                            <ListItemIcon>
+                                                <IoLogOut className="text-2xl" />
+                                            </ListItemIcon>
+                                            Logout
+                                        </MenuItem>
+                                    </Menu>
+                                </>)}
+
                             </li>
                             <li>
                                 <Tooltip title="Compare" placement="bottom">
@@ -79,13 +158,13 @@ const Header = () => {
                             </li>
                             <li>
                                 <Tooltip title="Cart" placement="bottom">
-                                   
-                                        <IconButton aria-label="cart" onClick={handleCart}>
-                                            <Badge badgeContent={4} classes={{ badge: "bg-primary text-white" }}>
-                                                <IoCartOutline />
-                                            </Badge>
-                                        </IconButton>
-                                    
+
+                                    <IconButton aria-label="cart" onClick={handleCart}>
+                                        <Badge badgeContent={4} classes={{ badge: "bg-primary text-white" }}>
+                                            <IoCartOutline />
+                                        </Badge>
+                                    </IconButton>
+
                                 </Tooltip>
                             </li>
 

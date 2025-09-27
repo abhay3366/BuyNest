@@ -4,7 +4,8 @@ import { RxCross2 } from 'react-icons/rx';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router';
 
-export default function Cart({ handleCart, openCart }) {
+export default function Cart(props) {
+    const { handleCart, openCart }=props
     const DrawerList = (
         <Box sx={{ width: 400 }} role="presentation" className="h-full flex flex-col">
 
@@ -94,8 +95,8 @@ export default function Cart({ handleCart, openCart }) {
                    <Link to="/viewCart">
                      <button  onClick={() => handleCart(false)} className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
                    </Link>
-                   <Link to="/">
-                     <button className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
+                   <Link to="/checkout">
+                     <button onClick={()=>handleCart(false)} className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
                         Checkout
                     </button>
                    </Link>
