@@ -1,74 +1,49 @@
-import React from "react";
+import { Button } from '@mui/material'
+import React from 'react'
+import { FaCloudUploadAlt, FaRegUser } from 'react-icons/fa'
+import { IoIosLogOut, IoMdHeartEmpty } from 'react-icons/io'
+import { IoBagCheckOutline } from 'react-icons/io5'
 
 const MyAccount = () => {
-  return (
-    <section className="min-h-screen bg-gray-100 py-10">
-      <div className="container mx-auto max-w-4xl bg-white shadow-xl rounded-2xl flex flex-col md:flex-row overflow-hidden">
-        
-        {/* Left Section - Profile Image */}
-        <div className="md:w-1/3 bg-indigo-50 flex flex-col items-center justify-center p-6">
-          <div className="relative">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Profile"
-              className="w-32 h-32 rounded-full border-4 border-indigo-500 object-cover"
-            />
-            <div className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition">
-              ✎
-            </div>
-          </div>
-          <h2 className="mt-4 text-xl font-semibold text-gray-800 text-center">
-            John Doe
-          </h2>
-          <p className="text-gray-500 text-sm text-center">+91 9876543210</p>
-        </div>
+    return (
+        <section className='py-10 w-full'>
+            <div className="container flex gap-5">
+                <div className="col1 w-[25%]">
+                    <div className="card bg-white shadow-md rounded-md p-5">
+                        <div className="w-full p-3 flex items-center justify-center flex-col">
+                            <div className='w-[110] h-[110] rounded-full overflow-hidden mb-4 relative group'>
+                                <img src="https://avatars.githubusercontent.com/u/68136960?v=4" className='w-full h-full object-cover' alt="" srcset="" />
 
-        {/* Right Section - Account Info */}
-        <div className="md:w-2/3 p-8 flex flex-col justify-center space-y-6">
-          <h2 className="text-2xl font-bold text-gray-800">My Account</h2>
+                                <div className='overlay cursor-pointer w-[100%] h-[100%] absolute top-0 left-0 z-50 bg-[rgba(0,0,0,0.7)] flex items-center justify-center opacity-0 transition-all group-hover:opacity-100'>
+                                    <FaCloudUploadAlt className='text-white text-[25px]' />
+                                    <input type="file" name="" className='absolute top-0 left-0 w-full h-full opacity-0' id="" />
+                                </div>
+                            </div>
+                            <h3 className='medium font-[500]'>Abhay Kant Tiwari</h3>
+                        </div>
 
-          <div className="grid grid-cols-1 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Full Name</label>
-              <input
-                type="text"
-                placeholder="John Doe"
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Phone</label>
-              <input
-                type="text"
-                placeholder="+91 9876543210"
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Password</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-              />
-            </div>
-          </div>
+                        <ul className='list-none leading-8'>
+                             <li className='w-full'>
+                                <button className='w-full flex items-center gap-2 cursor-pointer'><FaRegUser/>My Profile</button>
+                            </li>
+                            <li className='w-full'>
+                                <button className='w-full flex items-center gap-2 cursor-pointer'><IoMdHeartEmpty/>My List</button>
+                            </li>
+                            <li className='w-full'>
+                                <button className='w-full flex items-center gap-2 cursor-pointer'><IoBagCheckOutline/>My Orders</button>
+                            </li>
+                            <li className='w-full'>
+                                <button className='w-full flex items-center gap-2 cursor-pointer'><IoIosLogOut/>Logout</button>
+                            </li>
+                          
+                        </ul>
+                    </div>
+                </div>
+                <div className="col1 w-[75%]"></div>
 
-          <button className="w-full md:w-auto bg-indigo-600 text-white py-2 px-6 rounded-lg hover:bg-indigo-700 transition mt-4">
-            Update Account
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
+            </div>
+        </section>
+    )
+}
 
-export default MyAccount;
+export default MyAccount
