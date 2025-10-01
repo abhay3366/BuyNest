@@ -12,6 +12,7 @@ import Verify from "../component/Verify";
 import ForgotPassword from "../component/ForgotPassword";
 import Checkout from "../component/Checkout";
 import MyAccount from "../pages/MyAccount";
+import MyList from "../pages/MyList";
 
 
 const appRouter=createBrowserRouter([
@@ -66,6 +67,10 @@ const appRouter=createBrowserRouter([
         {
           path:"/my-account",
           element:<MyAccount/>
+        },
+        {
+          path:"/my-list",
+          element:<MyList/>
         }
     ]
   }

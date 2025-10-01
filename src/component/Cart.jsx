@@ -3,10 +3,13 @@ import Drawer from '@mui/material/Drawer';
 import { RxCross2 } from 'react-icons/rx';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router';
+import { closeCart, toggleCart } from '../utils/cartSlice';
+import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
-export default function Cart(props) {
-    const { handleCart, openCart }=props
-    const DrawerList = (
+const Cart = () => {
+    const dispatch=useDispatch();
+      const DrawerList = (
         <Box sx={{ width: 400 }} role="presentation" className="h-full flex flex-col">
 
             {/* Header */}
@@ -14,7 +17,7 @@ export default function Cart(props) {
                 <h2 className="text-lg font-semibold">Shopping Cart</h2>
                 <RxCross2
                     className="w-7 h-7 p-1 bg-primary text-white rounded-full cursor-pointer hover:bg-primary/80 transition"
-                    onClick={() => handleCart(false)}
+                    onClick={() => toggleCart(false)}
                 />
             </div>
 
@@ -93,10 +96,10 @@ export default function Cart(props) {
                 </div>
                 <div className='flex justify-center gap-4'>
                    <Link to="/viewCart">
-                     <button  onClick={() => handleCart(false)} className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
+                     <button  onClick={() => toggleCart(false)} className=' bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition'>View Cart</button>
                    </Link>
                    <Link to="/checkout">
-                     <button onClick={()=>handleCart(false)} className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
+                     <button onClick={()=>toggleCart(false)} className=" bg-primary cursor-pointer text-white py-2 px-3 rounded-lg hover:bg-primary/90 transition">
                         Checkout
                     </button>
                    </Link>
@@ -105,14 +108,13 @@ export default function Cart(props) {
         </Box>
     );
 
-    return (
-        <Drawer
-            open={openCart}
-            anchor="right"
-            onClose={() => handleCart(false)}
-        >
-            {DrawerList}
-
-        </Drawer>
-    );
+  return (
+    <div>
+      <Drawer open={open} className='!transition-all'   anchor="right" onClick={()=>dispatch(closeCart())}>
+        {DrawerList}
+      </Drawer>
+    </div>
+  )
 }
+
+export default Cart

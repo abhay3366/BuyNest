@@ -12,7 +12,7 @@ import { Tooltip } from "@mui/material";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Cart from "./Cart";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaCheckSquare, FaFirstOrder, FaHeart, FaUser, FaUserCircle } from "react-icons/fa";
 
 
@@ -23,6 +23,8 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import { GoListOrdered, GoPersonAdd } from "react-icons/go";
+import { openCart } from "../utils/cartSlice";
+
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -34,14 +36,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 const Header = () => {
-    const [openCart, setOpenCart] = useState(false);
+  
     const [anchorEl, setAnchorEl] = useState(null);
     const userLogin = useSelector((state) => state.auth.userLogin)
+    const handleOpenClose =useSelector((state)=>state.cart.openCart)
+    const dispatch=useDispatch()
    
 
-    const handleCart = (value) => {
-        setOpenCart(value);
-    };
 
 
     const open = Boolean(anchorEl);
@@ -126,7 +127,7 @@ const Header = () => {
                                          <MenuItem>
                                             
                                         </MenuItem>  
-                                        <MenuItem>
+                                        <MenuItem onClick={()=>dispatch()}>
                                             <Link to="/" className="flex">
                                                 <ListItemIcon>
                                                 <FaHeart className="text-xl" />
@@ -159,7 +160,7 @@ const Header = () => {
                             <li>
                                 <Tooltip title="Cart" placement="bottom">
 
-                                    <IconButton aria-label="cart" onClick={handleCart}>
+                                    <IconButton aria-label="cart" onClick={()=>dispatch(openCart())}>
                                         <Badge badgeContent={4} classes={{ badge: "bg-primary text-white" }}>
                                             <IoCartOutline />
                                         </Badge>
@@ -183,7 +184,10 @@ const Header = () => {
             </div>
             <Navigation />
 
-            {openCart && <Cart handleCart={handleCart} setOpenCart={setOpenCart} openCart={openCart} />}
+        
+
+            {/* {openCart && <Cart handleCart={handleCart} setOpenCart={setOpenCart} openCart={openCart} />} */}
+            {handleOpenClose  && <Cart />}
         </header>
     )
 }
