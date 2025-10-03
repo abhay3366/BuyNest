@@ -3,9 +3,9 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link, NavLink } from 'react-router';
 import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup } from '@mui/material';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import useHandleAccordion from '../hooks/useHandleAccordion';
 const ProductListing = () => {
 
-    const [index, setIndex] = useState(0)
     const [price,setPrice]=useState("110")
     const data = [
         {
@@ -31,10 +31,12 @@ const ProductListing = () => {
         }
 
     ]
-    const handelAccordion = (clickIndex) => {
+    // const handelAccordion = (clickIndex) => {
 
-        setIndex(index == clickIndex ? null : clickIndex)
-    }
+    //     setIndex(index == clickIndex ? null : clickIndex)
+    // }
+        // create a custom hook for accordion
+    const {index,handelAccordion} =useHandleAccordion();
     const handlePrice=(e)=>{
       setPrice(e.target.value)
     }

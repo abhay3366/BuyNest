@@ -1,7 +1,7 @@
 import { FaCloudUploadAlt, FaRegUser } from 'react-icons/fa'
 import { IoIosLogOut, IoMdHeartEmpty } from 'react-icons/io'
 import { IoBagCheckOutline } from 'react-icons/io5'
-import { NavLink, useParams } from 'react-router'
+import { NavLink} from 'react-router'
 const MyAccountSideBar = () => {
     return (
         <div className="col1 w-[20%]">

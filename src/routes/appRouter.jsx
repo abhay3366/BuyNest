@@ -13,6 +13,7 @@ import ForgotPassword from "../component/ForgotPassword";
 import Checkout from "../component/Checkout";
 import MyAccount from "../pages/MyAccount";
 import MyList from "../pages/MyList";
+import Order from "../pages/Order";
 
 
 const appRouter=createBrowserRouter([
@@ -71,6 +72,10 @@ const appRouter=createBrowserRouter([
         {
           path:"/my-list",
           element:<MyList/>
+        },
+        {
+          path:"/my-order",
+          element:<Order/>
         }
     ]
   }

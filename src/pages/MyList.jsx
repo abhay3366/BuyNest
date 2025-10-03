@@ -3,7 +3,7 @@ import { MdDelete } from 'react-icons/md';
 import MyAccountSideBar from '../component/MyAccountSideBar';
 import { Button, TextField } from '@mui/material';
 import { RxCross2 } from 'react-icons/rx';
-const MyList = () => {
+const MyList = () => {3
     return (
         <section className='py-10 w-full bg-[#F1F3F6]'>
             <div className="container flex gap-5">
