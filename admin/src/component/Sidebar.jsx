@@ -23,7 +23,7 @@ const Sidebar = () => {
             <img src={logo} className='w-[90%]' alt="" />
           </Link>
         </div>
-        <ul className="space-y-1">
+        <ul className="space-y-1 list">
           <li>
             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
               <MdDashboard className="text-[18px]" />
@@ -39,15 +39,16 @@ const Sidebar = () => {
             </Button>
             {
               <ul
-                className={`overflow-hidden transition-all duration-700 ease-in-out ${homeSlider.allowSingleAccordion ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
+                className={`overflow-hidden transition-all w-full list-disc list-outside duration-700 ease-in-out  ${homeSlider.allowSingleAccordion ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
                   }`}
               >
                 <li>
+                    <span className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-gray-600 rounded-full"></span>
                   <Link
                     to="/home"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    Abhay
+                    Home Banner List
                   </Link>
                 </li>
                 <li>
@@ -55,34 +56,21 @@ const Sidebar = () => {
                     to="/about"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    A
+                    Add Home Banner List
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/services"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contact"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
+                
               </ul>
             }
 
           </li>
           <li>
-            <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
+           <Link to="/users">
+             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
               <FaRegUserCircle className="text-[18px]" />
               Users
             </Button>
+           </Link>
           </li>
           <li onClick={() => product.handelToggleAccordion()}>
             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
@@ -97,36 +85,21 @@ const Sidebar = () => {
               >
                 <li>
                   <Link
-                    to="/home"
+                    to="/products"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    Abhay
+                    Product List
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/about"
+                    to="/product/upload"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    A
+                    Product Upload
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/services"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contact"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
+               
               </ul>
             }
           </li>
@@ -142,84 +115,46 @@ const Sidebar = () => {
               >
                 <li>
                   <Link
-                    to="/home"
+                    to="/category"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    Abhay
+                    Category List
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/about"
+                    to="/category/add"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    A
+                    Add A Category
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/services"
+                    to="/category/subCategory"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    A
+                    Sub Category List
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/contact"
+                    to="/category/subCategory /add"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
-                    A
+                    Add Sub Category List
                   </Link>
                 </li>
               </ul>
             }
           </li>
-          <li onClick={() => order.handelToggleAccordion()}>
+          <li>
             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
               <IoBagHandleOutline className="text-[18px]" />
               Orders
               {order.allowSingleAccordion ? <FaAngleUp className='ml-auto'/> : <FaAngleDown className='ml-auto' />}
             </Button>
-            {
-              <ul
-                className={`overflow-hidden transition-all duration-700 ease-in-out ${order.allowSingleAccordion ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
-                  }`}
-              >
-                <li>
-                  <Link
-                    to="/home"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    Abhay
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/about"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/services"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contact"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
-                  >
-                    A
-                  </Link>
-                </li>
-              </ul>
-            }
+           
           </li>
           <li>
             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">

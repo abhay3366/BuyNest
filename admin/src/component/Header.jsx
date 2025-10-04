@@ -21,7 +21,7 @@ const Header = () => {
   };
   return (
     <header className="w-full h-[64px] pr-7 bg-[white] flex items-center justify-between shadow-sm dark:shadow-2xl">
-      <div className="part1  w-[22%] flex items-center justify-end">
+      <div className="part1  w-[15%] flex items-center justify-end">
         <button className="w-[40px] h-[40px]  rounded-full flex items-center justify-center cursor-pointer">
           <CiMenuFries className="text-[22px] text-[rgba(0,0,0,0.8)]" />
         </button>
