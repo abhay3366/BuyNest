@@ -9,9 +9,12 @@ import { CgProfile } from "react-icons/cg";
 
 import { useState } from "react";
 import Divider from "@mui/material/Divider";
+import { useDispatch, useSelector } from "react-redux";
+import { toggle } from "../utils/sidebarSlice";
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const dispatch=useDispatch()
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,7 +25,7 @@ const Header = () => {
   return (
     <header className="w-full h-[64px] pr-7 bg-[white] flex items-center justify-between shadow-sm dark:shadow-2xl">
       <div className="part1  w-[15%] flex items-center justify-end">
-        <button className="w-[40px] h-[40px]  rounded-full flex items-center justify-center cursor-pointer">
+        <button onClick={()=>dispatch(toggle())} className="w-[40px] h-[40px]   rounded-full flex items-center justify-center cursor-pointer">
           <CiMenuFries className="text-[22px] text-[rgba(0,0,0,0.8)]" />
         </button>
       </div>

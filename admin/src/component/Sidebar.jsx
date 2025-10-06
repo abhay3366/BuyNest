@@ -8,6 +8,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 
 import useSingleAccordion from '../hooks/useSingleAccordion';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
   const homeSlider = useSingleAccordion();
@@ -15,9 +16,10 @@ const Sidebar = () => {
   const category = useSingleAccordion();
   const order = useSingleAccordion();
 
+ const isSideBarOpen=useSelector((state)=>state.sideBarReducer.isSideBarOpen)
   return (
     <>
-      <div className="sidebar fixed top-0 left-0 bg-[white] w-[18%] h-full border-r-2  border-gray-200 p-2">
+      <div  className={`sidebar fixed top-0 left-0 transition-all ease-in-out duration-500   bg-[white] ${isSideBarOpen ? '-translate-x-full':'w-[18%]'} h-full border-r-2  border-gray-200 p-2`}>
         <div className='py-2 w-full'>
           <Link to="">
             <img src={logo} className='w-[90%]' alt="" />

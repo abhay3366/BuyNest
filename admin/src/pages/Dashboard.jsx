@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Header from '../component/Header'
 import Sidebar from '../component/Sidebar'
 import Slide from '../component/Slide'
@@ -8,6 +9,19 @@ import useHandleAccordion from '../hooks/useHandleAccordion'
 import OrderStatus from '../component/OrderStatus'
 import shoes from "../assets/shoes.webp"
 import { Link } from 'react-router'
+import ProgressBar from '../component/ProgressBar'
+import { CiEdit } from 'react-icons/ci'
+import { IoEyeOutline } from 'react-icons/io5'
+import { AiOutlineDelete } from "react-icons/ai";
+import { useSelector } from 'react-redux'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+
+
+
+
 
 const Dashboard = () => {
     const orders = [
@@ -39,18 +53,22 @@ const Dashboard = () => {
         }
     ];
 
+
+
     const { index, handelAccordion } = useHandleAccordion();
+    const isSideBarOpen = useSelector((state) => state.sideBarReducer.isSideBarOpen);
+
 
     return (
         <section className='main'>
             <div className='contentMain flex'>
                 {/* Sidebar */}
-                <div className="sidebarWrapper w-[18%] bg-amber-400">
+                <div className={`sidebarWrapper  ${isSideBarOpen ? '-translate-x-full' : 'w-[18%]'} `}>
                     <Sidebar />
                 </div>
 
                 {/* Right Content */}
-                <div className='contentRight w-[82%]'>
+                <div className={`contentRight transition-all ease-in-out duration-500 ${isSideBarOpen ? 'w-[100%]' : 'w-[82%]'}`}>
                     <Header />
                     <div className='py-3 px-3'>
                         {/* Greeting Card */}
@@ -74,10 +92,27 @@ const Dashboard = () => {
                     {/* product */}
 
 
-                    <div className="card mx-3">
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <div className="card mx-3 ">
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2">
                             <div className='p-2'>
-                                <h1 className='text-[18px] font-[500]'>Products</h1>
+
+
+                                <div><h1 className='text-[18px] font-[500] py-3'>Products</h1></div>
+                                <div className=' flex justify-between items-center'>
+                                    <div>
+                                        <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                    <select id="small" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Choose category</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="FR">France</option>
+                                        <option value="DE">Germany</option>
+                                    </select>
+                                    </div>
+                                    <div>
+                                        <button className='bg-amber-100 px-2 py-1 rounded-md cursor-pointer'>Export to Excle</button>
+                                    </div>
+                                </div>
                             </div>
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -107,7 +142,7 @@ const Dashboard = () => {
                                             Price
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Rating
+                                            Sales
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Rating
@@ -135,26 +170,36 @@ const Dashboard = () => {
                                             Shoes
                                         </td>
                                         <td class="px-6 py-4">
-                                            ADIDAS 
+                                            ADIDAS
                                         </td>
                                         <td class="px-6 py-4">
-                                            ADIDAS 
+                                            ADIDAS
                                         </td>
                                         <td class="px-6 py-4">
-                                            1,836
+                                            <span className='oldPrice line-through'>2000 </span>
+                                            <span className='text-red-600'>1500</span>
                                         </td>
-                                        <td class="px-6 py-4">
-                                            Laptop
+                                        <td class="px-6 py-4 w-[120px]">
+                                            <div><span>500 Sales</span>
+                                                <ProgressBar variant="determinate" value={50} type={'success'} /></div>
                                         </td>
                                         <td class="px-6 py-4">
                                             4
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            <div className='flex gap-2'>
+                                                <Link
+                                                    href="#"
+                                                    className="flex items-center justify-center text-gray-600 text-xl  hover:bg-gray-300 rounded-full w-[30px] h-[30px]"
+                                                >
+                                                    <CiEdit />
+                                                </Link>
+
+                                                <Link href="#" className="flex items-center justify-center text-gray-600 text-xl hover:bg-gray-300 rounded-full w-[30px] h-[30px]"><IoEyeOutline /></Link>
+                                                <Link href="#" className="flex items-center justify-center text-gray-600 text-xl  hover:bg-gray-300 rounded-full w-[30px] h-[30px]"><AiOutlineDelete /></Link>
+                                            </div>
                                         </td>
                                     </tr>
-
-
                                 </tbody>
                             </table>
                             <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
@@ -191,12 +236,12 @@ const Dashboard = () => {
                     <div className="card mx-3">
                         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                             {/* Header */}
-                            <div className='flex items-center justify-between'>
-                                <div className='p-2'>
+                            <div className='flex items-center justify-between mt-4'>
+                                <div className='p-4'>
                                     <h1 className='text-[18px] font-[500]'>Recent Order</h1>
                                 </div>
                                 <div>
-                                    <div className="pb-4 bg-white dark:bg-gray-900">
+                                    <div className="pb-4 bg-white dark:bg-gray-900 ">
                                         <label htmlFor="table-search" className="sr-only">Search</label>
                                         <div className="relative mt-1">
                                             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
