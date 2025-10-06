@@ -18,6 +18,8 @@ import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
+import { ResponsiveContainer } from 'recharts'
+import DashboardChart from '../component/DashboardChart'
 
 
 
@@ -363,6 +365,11 @@ const Dashboard = () => {
 
                         </div>
                     </div>
+
+                    {/* chart */}
+                  
+                      <DashboardChart/>
+                  
                 </div>
             </div>
         </section>
