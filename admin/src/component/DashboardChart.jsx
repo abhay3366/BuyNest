@@ -19,8 +19,8 @@ const DashboardChart = () => {
 
     return (
         <>
-            <div className="card my-4 shadow-md sm:rounded-lg bg-white">
-                <div className="flex items-center justify-between px-5 ">
+            <div className="card mx-3 my-3  bg-white">
+                <div className="flex items-center justify-between px-5 pt-5">
                     <h2 className='text-[18px] font-[600]'>Total User & Total Sales</h2>
                 </div>
 

@@ -11,10 +11,13 @@ import { useState } from "react";
 import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle } from "../utils/sidebarSlice";
+import { Button } from "@mui/material";
 
 const Header = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const dispatch=useDispatch()
+  const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch()
+  const isLogin=useSelector((state)=>state.loginReducer.isLogin)
+  console.log(isLogin)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,7 +28,7 @@ const Header = () => {
   return (
     <header className="w-full h-[64px] pr-7 bg-[white] flex items-center justify-between shadow-sm dark:shadow-2xl">
       <div className="part1  w-[15%] flex items-center justify-end">
-        <button onClick={()=>dispatch(toggle())} className="w-[40px] h-[40px]   rounded-full flex items-center justify-center cursor-pointer">
+        <button onClick={() => dispatch(toggle())} className="w-[40px] h-[40px]   rounded-full flex items-center justify-center cursor-pointer">
           <CiMenuFries className="text-[22px] text-[rgba(0,0,0,0.8)]" />
         </button>
       </div>
@@ -33,52 +36,54 @@ const Header = () => {
       <div className="part2 w-[40%] flex items-center justify-end gap-4">
         <button className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-pointer">
           <Badge badgeContent={4} color="warning">
-          <FaRegBell className="text-[22px] text-[rgba(0,0,0,0.8)]" />
+            <FaRegBell className="text-[22px] text-[rgba(0,0,0,0.8)]" />
           </Badge>
         </button>
 
-        <div className="rounded-full w-[35px] h-[35px] cursor-pointer">
-          <img  onClick={handleClick} src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png" alt="" />
+       {
+        isLogin ? ( <div className="rounded-full w-[35px] h-[35px] cursor-pointer">
+          <img onClick={handleClick} src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png" alt="" />
 
-                <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-       
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <MenuItem onClick={handleClose}>
-         <div className="flex items-center gap-3">
-          <div className="rounded-full overflow-hidden cursor-pointer flex items-center gap-2">
-            <img src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png" className="w-[35px] h-[35px]" alt="" />
-           <div>
-             <h1 className="text-[14px]">Abhay Kant Tiwari</h1>
-            <p className="text-[11px] text-gray-400">tabhaykant2@gmail.com</p>
-           </div>
-          </div>
-         </div>
-        </MenuItem>
-        <Divider/>
-        <MenuItem>
-          <div className="flex items-center gap-2">
-            <CgProfile />
-            <span>Profile</span>
-          </div>
-       </MenuItem>
-       <MenuItem>
-          <div className="flex items-center gap-2">
-            <IoLogOutOutline />
-            <span>Logout</span>
-          </div>
-       </MenuItem>
-       
-       
-       
-      </Menu>
-        </div>
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            <MenuItem onClick={handleClose}>
+              <div className="flex items-center gap-3">
+                <div className="rounded-full overflow-hidden cursor-pointer flex items-center gap-2">
+                  <img src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png" className="w-[35px] h-[35px]" alt="" />
+                  <div>
+                    <h1 className="text-[14px]">Abhay Kant Tiwari</h1>
+                    <p className="text-[11px] text-gray-400">tabhaykant2@gmail.com</p>
+                  </div>
+                </div>
+              </div>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <div className="flex items-center gap-2">
+                <CgProfile />
+                <span>Profile</span>
+              </div>
+            </MenuItem>
+            <MenuItem>
+              <div className="flex items-center gap-2">
+                <IoLogOutOutline />
+                <span>Logout</span>
+              </div>
+            </MenuItem>
+
+
+
+          </Menu>
+        </div>) : (<Button className="!bg-[#2B7FFF] !text-white !rounded-4xl">Sign In</Button>)
+       }
       </div>
     </header>
   );

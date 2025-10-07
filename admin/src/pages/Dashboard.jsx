@@ -14,18 +14,12 @@ import { CiEdit } from 'react-icons/ci'
 import { IoEyeOutline } from 'react-icons/io5'
 import { AiOutlineDelete } from "react-icons/ai";
 import { useSelector } from 'react-redux'
-import Select from '@mui/material/Select'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import { ResponsiveContainer } from 'recharts'
+
 import DashboardChart from '../component/DashboardChart'
-
-
-
-
-
+import ProductsTable from '../component/ProductsTable'
 const Dashboard = () => {
+    const { index, handelAccordion } = useHandleAccordion();
+    const isSideBarOpen = useSelector((state) => state.sideBarReducer.isSideBarOpen);
     const orders = [
         {
             orderId: "ORD12345",
@@ -54,12 +48,6 @@ const Dashboard = () => {
             date: "2025-09-28",
         }
     ];
-
-
-
-    const { index, handelAccordion } = useHandleAccordion();
-    const isSideBarOpen = useSelector((state) => state.sideBarReducer.isSideBarOpen);
-
 
     return (
         <section className='main'>
@@ -93,150 +81,10 @@ const Dashboard = () => {
 
                     {/* product */}
 
-
-                    <div className="card mx-3 ">
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2">
-                            <div className='p-2'>
-
-
-                                <div><h1 className='text-[18px] font-[500] py-3'>Products</h1></div>
-                                <div className=' flex justify-between items-center'>
-                                    <div>
-                                        <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                    <select id="small" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Choose category</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
-                                    </div>
-                                    <div>
-                                        <button className='bg-amber-100 px-2 py-1 rounded-md cursor-pointer'>Export to Excle</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="p-4">
-                                            <div class="flex items-center">
-                                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Image
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Product name
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Category
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Sub Category
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Brand
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Price
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Sales
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Rating
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                            </div>
-                                        </td>
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img src={shoes} alt="" className='w-[70px]' />
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            <Link to="/products/121" className='hover:text-red-500'>Luft Pace M Running Shoes For Men</Link>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            Shoes
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            ADIDAS
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            ADIDAS
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span className='oldPrice line-through'>2000 </span>
-                                            <span className='text-red-600'>1500</span>
-                                        </td>
-                                        <td class="px-6 py-4 w-[120px]">
-                                            <div><span>500 Sales</span>
-                                                <ProgressBar variant="determinate" value={50} type={'success'} /></div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            4
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div className='flex gap-2'>
-                                                <Link
-                                                    href="#"
-                                                    className="flex items-center justify-center text-gray-600 text-xl  hover:bg-gray-300 rounded-full w-[30px] h-[30px]"
-                                                >
-                                                    <CiEdit />
-                                                </Link>
-
-                                                <Link href="#" className="flex items-center justify-center text-gray-600 text-xl hover:bg-gray-300 rounded-full w-[30px] h-[30px]"><IoEyeOutline /></Link>
-                                                <Link href="#" className="flex items-center justify-center text-gray-600 text-xl  hover:bg-gray-300 rounded-full w-[30px] h-[30px]"><AiOutlineDelete /></Link>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-                                <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">1000</span></span>
-                                <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                    <li>
-                                        <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-
+                    <ProductsTable />
                     {/* Orders Section */}
-                    <div className="card mx-3">
-                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <div className="card mx-3 my-3">
+                        <div className="relative overflow-x-auto  sm:rounded-lg">
                             {/* Header */}
                             <div className='flex items-center justify-between mt-4'>
                                 <div className='p-4'>
@@ -367,12 +215,11 @@ const Dashboard = () => {
                     </div>
 
                     {/* chart */}
-                  
-                      <DashboardChart/>
-                  
+
+                    <DashboardChart />
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 

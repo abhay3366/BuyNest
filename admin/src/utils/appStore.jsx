@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import sideBarReducer from"../utils/sidebarSlice";
+import sideBarReducer from "../utils/sidebarSlice";
+import loginReducer from "../utils/authSlice"
 
 const appStore= configureStore({
-  reducer: {sideBarReducer},
+  reducer: {sideBarReducer,loginReducer},
 })
 export default appStore;
