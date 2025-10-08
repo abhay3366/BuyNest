@@ -18,7 +18,7 @@ const Sidebar = () => {
 
  const isSideBarOpen=useSelector((state)=>state.sideBarReducer.isSideBarOpen)
   return (
-    <>
+    <><div className={`sidebarWrapper  ${isSideBarOpen ? '-translate-x-full' : 'w-[18%]'} `}>
       <div  className={`sidebar fixed top-0 left-0 transition-all ease-in-out duration-500   bg-[white] ${isSideBarOpen ? '-translate-x-full':'w-[18%]'} h-full border-r-2  border-gray-200 p-2`}>
         <div className='py-2 w-full'>
           <Link to="">
@@ -165,6 +165,7 @@ const Sidebar = () => {
             </Button>
           </li>
         </ul>
+      </div>
       </div>
     </>
   )
