@@ -9,33 +9,35 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import Slide from '@mui/material/Slide';
+import { MdClose } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggle } from '../utils/DialogSlice';
+
+const Transition = React.memo(
+  React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  })
+);
+
 
 export default function FullScreenDialog() {
-  const [open, setOpen] = React.useState(false);
+  const isDialogOpen=useSelector((state)=>state.dialogReducer.isDialogOpen)
+  const dispatch=useDispatch();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(toggle());
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button>
       <Dialog
         fullScreen
-        open={open}
+        open={isDialogOpen}
         onClose={handleClose}
+          
         slots={{
           transition: Transition,
         }}
@@ -48,7 +50,7 @@ export default function FullScreenDialog() {
               onClick={handleClose}
               aria-label="close"
             >
-              <CloseIcon />
+              <MdClose />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Sound

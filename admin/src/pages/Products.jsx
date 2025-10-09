@@ -9,6 +9,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import SearchBox from '../component/SearchBox'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggle } from '../utils/DialogSlice'
+import Dialoge from '../component/Dialoge'
 
 const Products = () => {
 const isDialogOpen=useSelector((state)=>state.dialogReducer.isDialogOpen)
@@ -202,9 +203,11 @@ const renderRating = (rating) => {
             onClick={()=>dispatch(toggle())}
             className="flex items-center gap-2 bg-[#155DFC] text-white rounded-md px-3 py-2 hover:bg-amber-600 transition"
           >
+               
             <FaPlus className="text-[16px]" />
             <span>Add Product</span>
           </Link>
+          {isDialogOpen && <Dialoge />}
         </div>
       </div>
 
