@@ -3,6 +3,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { Box, Button } from "@mui/material";
 import { FaPlus } from "react-icons/fa6";
+import { useDispatch } from 'react-redux';
+import { toggle } from '../utils/DialogSlice';
 // import shoes from "../assets/shoes.png"; // example image path
 
 const columns = [
@@ -71,7 +73,7 @@ const rows = [
 ];
 
 export default function ProductsDataTable() {
-  
+  const dispatch=useDispatch();
   return (
     <div className='card py-3 px-3'>
       <div class="relative overflow-x-auto  sm:rounded-lg p-2">
@@ -98,6 +100,7 @@ export default function ProductsDataTable() {
         >
           <Button
             variant="contained"
+             onClick={()=>dispatch(toggle())}
             sx={{
               backgroundColor: "#10B981",
               color: "white",
