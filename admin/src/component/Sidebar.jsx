@@ -8,9 +8,9 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 
 import useSingleAccordion from '../hooks/useSingleAccordion';
-import Dialoge from "../component/Dialoge"
 import { useDispatch, useSelector } from 'react-redux';
-import { toggle } from '../utils/DialogSlice';
+import AddProductDialog from './AddProductDialog';
+// import { toggle } from '../utils/DialogSlice';
 
 const Sidebar = () => {
   const homeSlider = useSingleAccordion();
@@ -51,7 +51,7 @@ const Sidebar = () => {
                 <li>
                     <span className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-gray-600 rounded-full"></span>
                   <Link
-                    to="/home"
+                    to="/homeSlider/list"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
                     Home Banner List
@@ -100,12 +100,12 @@ const Sidebar = () => {
                 <li>
                   <Link
                     
-                    onClick={()=>dispatch(toggle())}
+                    // onClick={()=>dispatch(open())}
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
                     Product Upload
                   </Link>
-                  {isDialogOpen && <Dialoge />}
+                  {isDialogOpen && <AddProductDialog />}
                 </li>
                
               </ul>

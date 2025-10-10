@@ -7,20 +7,21 @@ import img1 from "../assets/1.png"
 import { FaChevronDown, FaPlus } from 'react-icons/fa'
 import useHandleAccordion from '../hooks/useHandleAccordion'
 import OrderStatus from '../component/OrderStatus'
-import Dialoge from "../component/Dialoge"
+
 
 // import { useSelector } from 'react-redux'
 
 import DashboardChart from '../component/DashboardChart'
 import ProductsTable from '../component/ProductsTable'
-import { useDispatch, useSelector } from 'react-redux'
-import { toggle } from '../utils/DialogSlice'
+import { useDispatch, useSelector} from 'react-redux'
+import { openDialog} from '../utils/DialogSlice'
+import AddProductDialog from '../component/AddProductDialog'
 
 const Dashboard = () => {
     const { index, handelAccordion } = useHandleAccordion();
-     const isDialogOpen=useSelector((state)=>state.dialogReducer.isDialogOpen)
+     const activeDialog=useSelector((state)=>state.dialogReducer.activeDialog)
     const dispatch=useDispatch()
-    // const isSideBarOpen = useSelector((state) => state.sideBarReducer.isSideBarOpen);
+  
     const orders = [
         {
             orderId: "ORD12345",
@@ -60,10 +61,10 @@ const Dashboard = () => {
                             Good Morning , <br /> Abhay
                         </h1>
                         <p>Here's What happening on your today, See the statistic at once.</p>
-                        <button  onClick={()=>dispatch(toggle())} className='bg-blue-500 text-white px-3 py-1 rounded-sm mt-2 flex gap-1 items-center'>
+                        <button  onClick={()=>dispatch(openDialog("add_product"))} className='bg-blue-500 text-white px-3 py-1 rounded-sm mt-2 flex gap-1 items-center'>
                             <FaPlus /> Add Product
                         </button>
-                          {isDialogOpen && <Dialoge />}
+                           { activeDialog==="add_product" && <AddProductDialog />}
                     </div>
                     <img src={img1} alt="" className='w-[300px]' />
                 </div>

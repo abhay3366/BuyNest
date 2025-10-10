@@ -3,8 +3,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { Box, Button } from "@mui/material";
 import { FaPlus } from "react-icons/fa6";
-import { useDispatch } from 'react-redux';
-import { toggle } from '../utils/DialogSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { openDialog } from '../utils/DialogSlice';
+import AddProductDialog from './AddProductDialog';
+// import { toggle } from '../utils/DialogSlice';
 // import shoes from "../assets/shoes.png"; // example image path
 
 const columns = [
@@ -73,6 +75,7 @@ const rows = [
 ];
 
 export default function ProductsDataTable() {
+  const activeDialog=useSelector((state)=>state.dialogReducer.activeDialog)
   const dispatch=useDispatch();
   return (
     <div className='card py-3 px-3'>
@@ -100,7 +103,7 @@ export default function ProductsDataTable() {
         >
           <Button
             variant="contained"
-             onClick={()=>dispatch(toggle())}
+           onClick={()=>dispatch(openDialog("add_product"))}
             sx={{
               backgroundColor: "#10B981",
               color: "white",
@@ -114,7 +117,7 @@ export default function ProductsDataTable() {
             <FaPlus size={14} />
             Add Product
           </Button>
-
+ { activeDialog==="add_product" && <AddProductDialog />}
           <Button
             variant="contained"
             sx={{
