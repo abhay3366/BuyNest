@@ -5,6 +5,8 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Products from "../pages/Products";
 import HomeSliderBanner from "../pages/HomeSliderBanner";
+import Category from "../pages/Category";
+import SubCategory from "../pages/SubCategory";
 const appRouter=createBrowserRouter([
     {
         path:"/",
@@ -25,6 +27,16 @@ const appRouter=createBrowserRouter([
             {
                 path:"/homeSlider/list",
                 element:<HomeSliderBanner/>
+            },
+            {
+                path:"/category/list",
+                element:<Category/>
+            },
+            {
+            
+                path:"/category/subCategory",
+                element:<SubCategory/>
+            
             }
         ]
     }

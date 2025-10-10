@@ -10,6 +10,8 @@ import { IoIosLogOut } from "react-icons/io";
 import useSingleAccordion from '../hooks/useSingleAccordion';
 import { useDispatch, useSelector } from 'react-redux';
 import AddProductDialog from './AddProductDialog';
+import { openDialog } from '../utils/DialogSlice';
+import AddNewCategory from './AddNewCategory';
 // import { toggle } from '../utils/DialogSlice';
 
 const Sidebar = () => {
@@ -20,6 +22,7 @@ const Sidebar = () => {
   
  const isSideBarOpen=useSelector((state)=>state.sideBarReducer.isSideBarOpen)
  const isDialogOpen=useSelector((state)=>state.dialogReducer.isDialogOpen)
+ const activeDialog=useSelector((state)=>state.dialogReducer.activeDialog)
  const dispatch=useDispatch();
   return (
     <><div className={`sidebarWrapper  ${isSideBarOpen ? '-translate-x-full' : 'w-[18%]'} `}>
@@ -123,7 +126,7 @@ const Sidebar = () => {
               >
                 <li>
                   <Link
-                    to="/category"
+                    to="/category/list"
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
                     Category List
@@ -131,11 +134,12 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <Link
-                    to="/category/add"
+                    onClick={()=>dispatch(openDialog('add_category'))}
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
                     Add A Category
                   </Link>
+                  { activeDialog==="add_category" && <AddNewCategory />}
                 </li>
                 <li>
                   <Link
@@ -147,7 +151,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <Link
-                    to="/category/subCategory /add"
+                    onClick={()=>dispatch(openDialog('add_subcategory'))}
                     className="block px-4 py-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition"
                   >
                     Add Sub Category List
