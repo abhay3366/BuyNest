@@ -160,14 +160,15 @@ const Sidebar = () => {
               </ul>
             }
           </li>
-          <li>
-            <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
+          
+           <li>
+           <Link to="/orders">
+             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
               <IoBagHandleOutline className="text-[18px]" />
-              Orders
-              {order.allowSingleAccordion ? <FaAngleUp className='ml-auto'/> : <FaAngleDown className='ml-auto' />}
+             Orders
             </Button>
-           
-          </li>
+           </Link>
+            </li>
           <li>
             <Button className="w-full flex items-center gap-3 !justify-start !font-[500] !capitalize text-[14px] !text-[rgba(0,0,0,0.8)]">
               <IoIosLogOut className="text-[18px]" />
