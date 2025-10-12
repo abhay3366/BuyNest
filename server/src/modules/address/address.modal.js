@@ -29,10 +29,7 @@ const addressSchema=new mongoose.Schema({
         type:Boolean,
         default:true
     },
-    userId:{
-        type:Object.Schema.ObjectId,
-        default:""
-    }
+   
 },{timestamps:true})
 
 const AddressModal=mongoose.model('address',addressSchema);

@@ -1,7 +1,61 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
+import {  toast } from 'react-toastify'
+import Verify from "./Verify";
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    isConfirm: false
+  })
+  const [loading, setLoading] = useState(false)
+   const navigate = useNavigate();
+  const handleInput = (e) => {
+    e.preventDefault();
+    const { name, value, type, checked } = e.target;
+    console.log(checked)
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
+
+  }
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+       setLoading(true)
+      const response = await fetch('http://localhost:8000/users/register', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      // set token in local storage
+    localStorage.setItem("token", data.token);
+
+      console.log("datattt",data)
+      // verify otp
+        await navigate("/verify");
+       setLoading(false)
+       
+      if (!data) {
+        setLoading(false)
+      }
+      console.log("server response", data);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Network error, please try again");
+    }
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
@@ -12,7 +66,7 @@ const SignUp = () => {
         </p>
 
         {/* Form */}
-        <form className="mt-6 space-y-4">
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           {/* Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -21,6 +75,9 @@ const SignUp = () => {
             <input
               type="text"
               id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInput}
               placeholder="Abhay"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -34,6 +91,9 @@ const SignUp = () => {
             <input
               type="email"
               id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInput}
               placeholder="abhaykanttiwari9595@gmail.com"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -47,6 +107,9 @@ const SignUp = () => {
             <input
               type="password"
               id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInput}
               placeholder="••••••••"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -60,6 +123,9 @@ const SignUp = () => {
             <input
               type="password"
               id="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleInput}
+              name="confirmPassword"
               placeholder="••••••••"
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -67,7 +133,7 @@ const SignUp = () => {
 
           {/* Terms & Conditions */}
           <div className="flex items-center gap-2 text-sm">
-            <input type="checkbox" id="terms" className="rounded border-gray-300" />
+            <input type="checkbox" name="isConfirm" checked={formData.isConfirm} id="terms" onChange={handleInput} className="rounded border-gray-300" />
             <label htmlFor="terms">
               I agree to the{" "}
               <Link to="/terms" className="text-indigo-600 hover:underline">
@@ -77,12 +143,14 @@ const SignUp = () => {
           </div>
 
           {/* Submit */}
-          <button
+          <Button
             type="submit"
-            className="w-full bg-primary hover:bg-indigo-700 cursor-pointer text-white py-2 rounded-lg font-medium"
+            disabled={loading}
+         
+            className="w-full !bg-primary hover:!bg-indigo-700 !cursor-pointer !text-white !py-2 !rounded-lg !font-medium"
           >
-            Sign Up
-          </button>
+            {loading ? "Registering..." : "Register"}
+          </Button>
         </form>
 
         {/* Already have account */}
