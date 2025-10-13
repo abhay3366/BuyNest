@@ -40,17 +40,27 @@ const SignUp = () => {
       });
       const data = await response.json();
       // set token in local storage
-    localStorage.setItem("token", data.token);
+      const localStorageData={
+        "token":data.token,
+        user:{
+          name:data.name,
+          email:data.email
+        }
+      }
+    localStorage.setItem("userData",JSON.stringify(localStorageData));
 
       console.log("datattt",data)
-      // verify otp
-        await navigate("/verify");
-       setLoading(false)
-       
-      if (!data) {
-        setLoading(false)
+     
+      if(data.token){
+         toast.success(data.message)
+          navigate("/verify");
+      }else{
+        toast.warning(data.message)
+         setLoading(false)
       }
-      console.log("server response", data);
+      // verify otp
+       
+     
     } catch (error) {
       console.error("Error:", error);
       alert("Network error, please try again");

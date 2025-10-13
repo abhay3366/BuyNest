@@ -43,7 +43,8 @@ const Header = () => {
     const dispatch=useDispatch()
    
 
-
+    const {user} = JSON.parse(localStorage.getItem("userData"));
+    console.log("username",user.name)
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -93,7 +94,7 @@ const Header = () => {
                                 </>) : (<>
                                    <button className="cursor-pointer flex gap-1" onClick={handleClick}>
                                      <FaUserCircle className="text-2xl cursor-pointer "  />
-                                    <h1>Abhay Kant tiwari</h1>
+                                    <h1>{user.name}</h1>
                                    </button>
                                     <Menu
                                         anchorEl={anchorEl}
@@ -110,8 +111,8 @@ const Header = () => {
                                                 <FaUserCircle className="text-xl" />
                                             </ListItemIcon>
                                            <div className="leading-4">
-                                            <h1 className="text-[15px]">Abhay Kant Tiwari</h1>
-                                            <h3 className="text-[13px] text-gray-400">tabhaykant1@gmail.com</h3>
+                                            <h1 className="text-[15px]">{user.name}</h1>
+                                            <h3 className="text-[13px] text-gray-400">{user.email}</h3>
                                            </div>
                                         </MenuItem>   
                                          <MenuItem>

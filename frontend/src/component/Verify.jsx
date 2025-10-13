@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { login } from "../utils/authSlice";
+import { useDispatch } from 'react-redux'
 
 const Verify = () => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [responseData, setResponseData] = useState(null);
   const navigate=useNavigate()
+  const dispatch=useDispatch();
 
-  const token = localStorage.getItem("token");
+  const {token,user} = JSON.parse(localStorage.getItem("userData"));
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -34,6 +38,7 @@ const Verify = () => {
       if (res.ok) {
         // alert("OTP Verified Successfully!");
         toast.success("User Registered Successfully");
+        dispatch(login(true))
         navigate('/')
 
       } else {

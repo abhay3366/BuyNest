@@ -4,9 +4,11 @@ const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 const dotenv=require('dotenv')
 const transporter=require("../../config/mail.js")
+const { useDispatch } = require('react-redux')
 dotenv.config();
 
 const app=express.Router();
+
 
 app.post("/register",async(req,res)=>{
    try{
@@ -44,7 +46,9 @@ app.post("/register",async(req,res)=>{
 
    res.status(200).json({
       message: 'OTP sent to your email. Please verify.',
-      token // send token to frontend
+      token, // send token to frontend
+      name,
+      email
     });
    }catch(error){
     res.status(404).json({message:error.message})
@@ -75,6 +79,7 @@ app.post("/verify-otp",async(req,res)=>{
         password:decoded.hashedPassword 
     })
     await user.save();
+
     res.status(200).json({ message: 'Email verified successfully. User registered!' });
     }catch(error){
         res.status(404).json({message:error})

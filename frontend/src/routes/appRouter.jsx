@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import HelpCenter from "../pages/HelpCenter";
 import TrackOrder from "../pages/TrackOrder";
 import SignIn from "../component/SignIn";
-import SignUp from "../component/signup";
+
 import Cart from "../component/Cart";
 import ProductListing from "../component/ProductListing";
 import ViewCart from "../component/ViewCart";
@@ -14,6 +14,7 @@ import Checkout from "../component/Checkout";
 import MyAccount from "../pages/MyAccount";
 import MyList from "../pages/MyList";
 import Order from "../pages/Order";
+import SignUp from "../component/Signup";
 
 
 const appRouter=createBrowserRouter([
