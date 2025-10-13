@@ -93,10 +93,12 @@ app.post("/login",async(req,res)=>{
    try {
      const {email,password}=req.body
     const user=await User.findOne({email})
+    console.log("🚀 ~ user:", user)
     if(!user){
         return res.status(404).json({message:"email not found"})
     }
     const isMatch=await bcrypt.compare(password,user.password)
+    console.log("🚀 ~ isMatch:", isMatch)
     if(!isMatch){
         return res.status(404).json({message:"Invalid Credential"})
     }
@@ -107,10 +109,11 @@ app.post("/login",async(req,res)=>{
         {userId:user._id,name:user.name},
         process.env.JWT_SECRET,
         {expiresIn:'1h'}
-    )
-    res.json({token})
+    ) 
+    res.json({token,userId:user._id,name:user.name,email:user.email})
    } catch (error) {
-    res.status(404).json({message:res.error})
+   console.error("Login error:", error);
+    res.status(500).json({ message: error.message });
    }
 })
 

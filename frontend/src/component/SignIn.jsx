@@ -1,26 +1,69 @@
 import React, { useRef, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../utils/authSlice";
+
 
 const SignIn = () => {
-  const [showPassword,hidePassword]=useState(false)
-  const navigate=useNavigate();
+  const [showPassword, hidePassword] = useState(false)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
 
-  const inputRef=useRef(null)
-  
-  const forgotPassword=(e)=>{
+  const inputRef = useRef(null)
+
+  const forgotPassword = (e) => {
     e.preventDefault();
-    if(inputRef.current.type=="email"){
-      if(inputRef.current.value){
+    if (inputRef.current.type == "email") {
+      if (inputRef.current.value) {
         console.log("d")
         navigate("/verify")
       }
     }
     console.log(inputRef.current.type)
   }
-  const handleIcon=()=>{
+  const handleIcon = () => {
     hidePassword(!showPassword)
+  }
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    e.preventDefault();
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const res = await fetch('http://localhost:8000/users/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+    const data = await res.json();
+
+    if (data.token) {
+      // Save token to localStorage or sessionStorage
+      dispatch(login(true))
+      const localStorageData = {
+        "token": data.token,
+        user: {
+          name: data.name,
+          email: data.email
+        }
+      }
+      localStorage.setItem("userData", JSON.stringify(localStorageData));
+      navigate("/");
+    } else {
+      alert(data.message);
+    }
+
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -32,7 +75,7 @@ const SignIn = () => {
         </p>
 
         {/* Form */}
-        <form className="mt-6 space-y-4">
+        <form className="mt-6 space-y-4" onSubmit={handleLogin}>
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -41,9 +84,10 @@ const SignIn = () => {
             <input
               type="email"
               id="email"
-              ref={inputRef}
+              onChange={handleInput}
+              value={formData.email}
               name="email"
-              placeholder="abhaykanttiwari9595@gmail.com"
+              placeholder=""
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -54,15 +98,18 @@ const SignIn = () => {
               Password
             </label>
             <input
-              type={showPassword==true?"text":"password"}
+              type={showPassword == true ? "text" : "password"}
               id="password"
-              placeholder="••••••••"
+              name="password"
+              onChange={handleInput}
+              value={formData.password}
+              placeholder=""
               className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              
+
             />
             <span onClick={handleIcon} className="absolute top-1/2 right-0 cursor-pointer p-1 w-[30px]">
-            {showPassword==true ? <FaRegEye/> : <FaRegEyeSlash />} </span>
-            
+              {showPassword == true ? <FaRegEye /> : <FaRegEyeSlash />} </span>
+
           </div>
 
           {/* Remember + Forgot */}
@@ -71,7 +118,7 @@ const SignIn = () => {
               <input type="checkbox" className="rounded border-gray-300" />
               Remember me
             </label>
-            <Link  onClick={forgotPassword} className="text-indigo-600 hover:underline">
+            <Link onClick={forgotPassword} className="text-indigo-600 hover:underline">
               Forgot password?
             </Link>
           </div>
