@@ -58,14 +58,14 @@ app.post("/register",async(req,res)=>{
 app.post("/verify-otp",async(req,res)=>{
     try{
         const {token,otp}=req.body;
-        console.log("token otp",otp)
+        // console.log("token otp",otp)
         
          if (!token || !otp) {
       return res.status(400).json({ message: "Token or OTP missing" });
     }
        // Verify and decode token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("decode",decoded)
+        // console.log("decode",decoded)
     // Check OTP
   
 
@@ -93,12 +93,12 @@ app.post("/login",async(req,res)=>{
    try {
      const {email,password}=req.body
     const user=await User.findOne({email})
-    console.log("🚀 ~ user:", user)
+    // console.log("🚀 ~ user:", user)
     if(!user){
         return res.status(404).json({message:"email not found"})
     }
     const isMatch=await bcrypt.compare(password,user.password)
-    console.log("🚀 ~ isMatch:", isMatch)
+    // console.log("🚀 ~ isMatch:", isMatch)
     if(!isMatch){
         return res.status(404).json({message:"Invalid Credential"})
     }
