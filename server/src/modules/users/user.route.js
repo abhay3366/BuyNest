@@ -109,7 +109,7 @@ app.post("/login", async (req, res) => {
         )
         res.json({ token, userId: user._id, name: user.name, email: user.email })
     } catch (error) {
-        console.error("Login error:", error);
+        // console.error("Login error:", error);
         res.status(500).json({ message: error.message });
     }
 })
@@ -159,8 +159,8 @@ app.post("/forgot-password", async (req, res) => {
 
 app.post("/verify-forgotPassword-otp", async (req, res) => {
     const { otp, token } = req.body;
-    console.log("🚀 ~ token:", token)
-    console.log("🚀 ~ otp:", otp)
+    // console.log("🚀 ~ token:", token)
+    // console.log("🚀 ~ otp:", otp)
 
     if (!token || !otp) {
         return res.status(400).json({ message: "Token or OTP missing" });
@@ -176,8 +176,10 @@ app.post("/verify-forgotPassword-otp", async (req, res) => {
 app.post("/reset-password", async (req, res) => {
     try {
         const { password, token } = req.body;
+        // console.log("🚀 ~ token:", token)
+        // console.log("🚀 ~ password:", password)
 
-        if (!password || !token) {
+        if (!password || !token.token) {
             return res.status(400).json({ ok: false, message: "Missing password or token" });
         }
 
@@ -200,7 +202,7 @@ app.post("/reset-password", async (req, res) => {
         res.json({ ok: true, message: "Password updated successfully" });
 
     } catch (err) {
-        console.error("Error resetting password:", err);
+        // console.error("Error resetting password:", err);
         res.status(500).json({ ok: false, message: "Internal server error" });
     }
 });

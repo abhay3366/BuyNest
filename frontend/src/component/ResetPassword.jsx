@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
+    const navigate=useNavigate();
     const [formData,setFormData]=useState({
         password:"",
         confirmPassword:""
@@ -11,7 +14,7 @@ const ResetPassword = () => {
         const {value,name}=e.target
         setFormData((prev)=>({...prev,[name]:value}))
     }
-     console.log("🚀 ~ ResetPassword ~ formData:", formData)
+    //  console.log("🚀 ~ ResetPassword ~ formData:", formData)
     const handleUpdatePassword = async (e) => {
     e.preventDefault();
 
@@ -21,7 +24,7 @@ const ResetPassword = () => {
     }
 
     const token = JSON.parse(localStorage.getItem("otpToken"));
-    console.log("🚀 ~ handleUpdatePassword ~ token:", token);
+    // console.log("🚀 ~ handleUpdatePassword ~ token:", token);
 
     try {
         const response = await fetch("http://localhost:8000/users/reset-password", {
@@ -36,17 +39,18 @@ const ResetPassword = () => {
         });
 
         const data = await response.json();
-        console.log("🚀 ~ handleUpdatePassword ~ data:", data)
+        // console.log("🚀 ~ handleUpdatePassword ~ data:", data)
 
         if (data.ok) {
-            console.log("Success:", data.message);
-            alert("Password updated successfully!");
+            // console.log("Success:", data.message);
+            toast.success("Password updated successfully!")
+            navigate("/login")
         } else {
-            console.log("Failed:", data.message);
+            // console.log("Failed:", data.message);
             alert("Failed: " + data.message);
         }
     } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         alert("Something went wrong. Try again.");
     }
 };

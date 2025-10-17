@@ -8,6 +8,8 @@ import { login } from "../utils/authSlice";
 
 const SignIn = () => {
   const [showPassword, hidePassword] = useState(false)
+  const [loading,setLoading]=useState(false)
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -21,7 +23,7 @@ const SignIn = () => {
   })
   const dispatch = useDispatch()
   const navigate = useNavigate();
-
+    console.log("🚀 ~ SignIn ~ loading:", loading)
 
   // handle password
   const forgotPassword = (e) => {
@@ -44,6 +46,7 @@ const SignIn = () => {
 // on submit handle login
 const handleLogin = async (e) => {
   e.preventDefault();
+  setLoading(true)
   const res = await fetch('http://localhost:8000/users/login', {
     method: "POST",
     headers: {
@@ -52,7 +55,7 @@ const handleLogin = async (e) => {
     body: JSON.stringify(formData)
   })
   const data = await res.json();
-
+  setLoading(false)
   if (data.token) {
     // Save token to localStorage or sessionStorage
     dispatch(login(true))
@@ -81,6 +84,7 @@ const handleLogin = async (e) => {
   // handle forgot password
   const handleForgot=async(e)=>{
     e.preventDefault();
+    setLoading(true)
     const response=await fetch('http://localhost:8000/users/forgot-password',{
       method:"POST",
       headers:{
@@ -89,6 +93,7 @@ const handleLogin = async (e) => {
        body: JSON.stringify(handleForgotEmailInput)
     })
     const data=await response.json();
+    setLoading(false)
     // set localstorage
     localStorage.setItem("otpToken",JSON.stringify({"token":data.token,"email":data.email}))
   
@@ -108,7 +113,7 @@ const handleLogin = async (e) => {
           </p>
 
           {/* Form */}
-          <form className="mt-6 space-y-4" onSubmit={handleForgot}>
+          <form className="space-y-2" onSubmit={handleForgot}>
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -154,7 +159,10 @@ const handleLogin = async (e) => {
               type="submit"
               className="w-full cursor-pointer bg-primary hover:bg-indigo-700 text-white py-2 rounded-lg font-medium"
             >
-              Next
+           
+              {loading ? "Loading..." : "Next"}
+
+              
             </button>
           </form>
 

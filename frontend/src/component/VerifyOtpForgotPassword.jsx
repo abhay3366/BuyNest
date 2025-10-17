@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import { login } from "../utils/authSlice";
+
 import { useDispatch } from 'react-redux'
 
 const VerifyOtpForgotPassword = () => {
