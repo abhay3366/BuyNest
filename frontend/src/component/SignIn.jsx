@@ -12,8 +12,13 @@ const SignIn = () => {
     email: "",
     password: ""
   })
+  const [otpForm,setOtpForm]=useState(true);
   // handle password
   const [forgotPasswordForm, setforgotPasswordForm] = useState(false)
+  // handle email
+  const [handleForgotEmailInput,setHandleForgotEmailInput]=useState({
+    email:""
+  })
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
@@ -35,34 +40,62 @@ const SignIn = () => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  // on submit handle login
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const res = await fetch('http://localhost:8000/users/login', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    })
-    const data = await res.json();
 
-    if (data.token) {
-      // Save token to localStorage or sessionStorage
-      dispatch(login(true))
-      const localStorageData = {
-        "token": data.token,
-        user: {
-          name: data.name,
-          email: data.email
-        }
+// on submit handle login
+const handleLogin = async (e) => {
+  e.preventDefault();
+  const res = await fetch('http://localhost:8000/users/login', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  })
+  const data = await res.json();
+
+  if (data.token) {
+    // Save token to localStorage or sessionStorage
+    dispatch(login(true))
+    const localStorageData = {
+      "token": data.token,
+      user: {
+        name: data.name,
+        email: data.email
       }
-      localStorage.setItem("userData", JSON.stringify(localStorageData));
-      navigate("/");
-    } else {
-      alert(data.message);
     }
+    localStorage.setItem("userData", JSON.stringify(localStorageData));
+    navigate("/");
+  } else {
+    alert(data.message);
+  }
 
+}
+  // handle input of forgot password
+  const handleEmailInputField =async(e)=>{
+      e.preventDefault();
+    const {value}=e.target;
+    setHandleForgotEmailInput({email:value})
+  }
+ console.log("handleForgotEmailInput",handleForgotEmailInput)
+
+  // handle forgot password
+  const handleForgot=async(e)=>{
+    e.preventDefault();
+    const response=await fetch('http://localhost:8000/users/forgot-password',{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+       body: JSON.stringify(handleForgotEmailInput)
+    })
+    const data=await response.json();
+    // set localstorage
+    localStorage.setItem("otpToken",JSON.stringify({"token":data.token,"email":data.email}))
+  
+    if(data.token){
+      navigate("/VerifyOtpForgotPassword");
+    }
+    
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -75,7 +108,7 @@ const SignIn = () => {
           </p>
 
           {/* Form */}
-          <form className="mt-6 space-y-4" onSubmit={handleLogin}>
+          <form className="mt-6 space-y-4" onSubmit={handleForgot}>
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -84,36 +117,18 @@ const SignIn = () => {
               <input
                 type="email"
                 id="email"
-                onChange={handleInput}
-                value={formData.email}
+                onChange={handleEmailInputField}
+                value={handleForgotEmailInput.email}
                 name="email"
                 placeholder=""
                 className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
-            {/* Password */}
-            <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                type={showPassword == true ? "text" : "password"}
-                id="password"
-                name="password"
-                onChange={handleInput}
-                value={formData.password}
-                placeholder=""
-                className="mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-
-              />
-              <span onClick={handleIcon} className="absolute top-1/2 right-0 cursor-pointer p-1 w-[30px]">
-                {showPassword == true ? <FaRegEye /> : <FaRegEyeSlash />} </span>
-
-            </div>
+          
 
             {/* Reset Password */}
-            <div className="relative">
+            {/* <div className="relative">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                Reset Password
               </label>
@@ -130,7 +145,7 @@ const SignIn = () => {
               <span onClick={handleIcon} className="absolute top-1/2 right-0 cursor-pointer p-1 w-[30px]">
                 {showPassword == true ? <FaRegEye /> : <FaRegEyeSlash />} </span>
 
-            </div>
+            </div> */}
 
            
 
@@ -139,7 +154,7 @@ const SignIn = () => {
               type="submit"
               className="w-full cursor-pointer bg-primary hover:bg-indigo-700 text-white py-2 rounded-lg font-medium"
             >
-              Reset
+              Next
             </button>
           </form>
 

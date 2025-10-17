@@ -15,6 +15,8 @@ import MyAccount from "../pages/MyAccount";
 import MyList from "../pages/MyList";
 import Order from "../pages/Order";
 import SignUp from "../component/Signup";
+import ResetPassword from "../component/ResetPassword";
+import VerifyOtpForgotPassword from "../component/VerifyOtpForgotPassword";
 
 
 const appRouter=createBrowserRouter([
@@ -77,6 +79,14 @@ const appRouter=createBrowserRouter([
         {
           path:"/my-order",
           element:<Order/>
+        },
+        {
+          path:"/resetPasswrod",
+          element:<ResetPassword/>
+        },
+        {
+          path:"/VerifyOtpForgotPassword",
+          element:<VerifyOtpForgotPassword/>
         }
     ]
   }
