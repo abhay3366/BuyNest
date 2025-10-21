@@ -1,56 +1,41 @@
+const cloudinary = require('cloudinary').v2;
+const { response } = require('express');
+const fs=require("fs");
+require('dotenv').config()
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CONFIG_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_CONFIG_CLOUD_API, 
+  api_secret: process.env.CLOUDINARY_CONFIG_API_SECRET,
+  secure:true
+});
+var imageArr=[];
+const userAvatarController=async(req,res)=>{
+    console.log("🚀 ~ userAvatarController ~ req:", req)
+    try {
+        const image=req.files;
+        console.log("🚀 ~ userAvatarController ~ image:", image)
+        const options={
+            use_filename:true,
+            unique_filename:false,
+            overwrite:false
+        }
+        for(let i=0;i<image?.length;i++){
+            const img=await cloudinary.uploader.upload(
+                image[i].path,
+                options,
+                function(error,result){
+                    console.log("🚀 ~ userAvatarController ~ result:", result)
+                    imageArr.push(req.secure_url);
+                    fs.unlinkSync(`uploads/${req.files[i].filename}`)
+                    console.log(req.files[i].filename)
+                }
+            )
+        }
 
-// const User=require("./user.modal")
-// const register= async(req,res)=>{
-//    try{
-   
+        return response.status(200).json({avtar:imageArr[0]})
+    } catch (error) {
+        return res.status(500).json({message:error.message,error:true,succcess:false})
+    }
+}
 
-//     const {name,email,password}=req.body;
-//     // Check if user already exists (by name or email)
-//     const existingUser=await User.findOne({$or:[{name},{email}]})
-  
-//     if(existingUser){
-//         res.status(404).json({message:"Username or Email already exist"})
-//     }
-//     // Hash password
-//     const hassedPassword= await bcrypt.hash(password,10);
-//     // Save user
-//     const user=new User({
-//         name:name,
-//         email:email,
-//         password:hassedPassword
-//     })
-//     const savedUser=await user.save();
-//     res.status(202).json(savedUser)
-
-//    }catch(error){
-//     res.status(404).json({message:error.message})
-
-//    }
-// }
-
-//  const login=async(req,res)=>{
-//    try {
-//      const {email,password}=req.body
-//     //  Check if email exists
-//     const user=await User.findOne({email})
-//     if(!user){
-//         return res.status(404).json({message:"email not found"})
-//     }
-//     // Compare password
-//     const isMatch=await bcrypt.compare(password,user.password)
-//     if(!isMatch){
-//         return res.status(404).json({message:"Invalid Credential"})
-//     }
-//     // Generate JWT token
-//     const token=jwt.sign(
-//         {userId:user._id,name:user.name},
-//         process.env.JWT_SECRET,
-//         {expiresIn:'1h'}
-//     )
-//     res.json({token})
-//    } catch (error) {
-//     res.status(404).json({message:res.error})
-//    }
-// }
-
-// module.exports={login,register}
+module.exports = { userAvatarController };

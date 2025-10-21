@@ -7,7 +7,8 @@ var helmet= require('helmet');
 const connect = require("./config/db");
 
 // import routes
-const userRouter=require("../src/modules/users/user.route")
+const userRouter=require("../src/modules/users/user.route");
+const auth = require("../middleware/auth");
 
 const app=express();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use(helmet({
 }));
 
 // Define routes
+
 app.use("/users",userRouter)
 
 

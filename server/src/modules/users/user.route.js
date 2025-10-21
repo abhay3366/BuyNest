@@ -5,7 +5,21 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const transporter = require("../../config/mail.js")
 const { useDispatch } = require('react-redux')
-dotenv.config();
+
+const { userAvatarController } = require('./user.controller.js')
+const upload = require('../../../middleware/multer.js')
+const getDataUrl = require('../../../utils/bufferGenerator.js')
+// const cloudinary = require('cloudinary').v2;
+const cloudinary=require("../../config/cloudinary.js")
+
+
+require("dotenv").config();
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET
+// });
 
 const app = express.Router();
 
@@ -206,11 +220,37 @@ app.post("/reset-password", async (req, res) => {
         res.status(500).json({ ok: false, message: "Internal server error" });
     }
 });
+// 
+
+// upload avatar to cloudinary
+app.post("/avatar/cloudinary", upload.array("files", 10), async (req, res) => {
+  try {
+    const files = req.files; // array of files
+    console.log("🚀 ~ files:", files);
+
+    const uploadResults = [];
+
+    for (const file of files) {
+      const uploadResult = await cloudinary.uploader.upload(file.path, {
+        folder: "avatar",
+        public_id: `avatar_${Date.now()}`,
+      });
+      uploadResults.push(uploadResult);
+    }
+
+    res.status(200).json({
+      message: "All files uploaded successfully!",
+      results: uploadResults,
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 app.post("/logout", async (req, res) => {
     res.status(202).json({ message: 'Logged out successfully' })
 })
-
 
 module.exports = app;
