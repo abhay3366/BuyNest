@@ -11,15 +11,11 @@ const upload = require('../../../middleware/multer.js')
 const getDataUrl = require('../../../utils/bufferGenerator.js')
 // const cloudinary = require('cloudinary').v2;
 const cloudinary=require("../../config/cloudinary.js")
+const auth = require('../../../middleware/auth.js')
 
 
 require("dotenv").config();
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET
-// });
 
 const app = express.Router();
 
@@ -223,7 +219,7 @@ app.post("/reset-password", async (req, res) => {
 // 
 
 // upload avatar to cloudinary
-app.post("/avatar/cloudinary", upload.array("files", 10), async (req, res) => {
+app.post("/avatar/cloudinary",upload.array("files", 10), async (req, res) => {
   try {
     const files = req.files; // array of files
     console.log("🚀 ~ files:", files);
@@ -247,6 +243,21 @@ app.post("/avatar/cloudinary", upload.array("files", 10), async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+// remove imge from cloudinary
+app.delete("/avatar/cloudinary/delete", async (req, res) => {
+    try {
+        const { public_id } = req.body;
+        console.log("🚀 ~ public_id:", public_id)
+        if (!public_id) {
+            return res.status(400).json({ message: "Public ID is required" });
+        }
+
+        const result = await cloudinary.uploader.destroy(public_id);
+        res.status(200).json({ message: "Image deleted successfully", result });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
 
 
 app.post("/logout", async (req, res) => {
