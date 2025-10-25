@@ -1,0 +1,81 @@
+const cloudinary = require('../../config/cloudinary');
+const fs = require('fs');
+const CategoryModal = require('./category.modal');
+
+// ✅ Upload Image Middleware
+const uploadImage = async (req, res, next) => {
+  try {
+    const files = req.files;
+    const uploadedImages = [];
+
+    for (const file of files) {
+      const uploadResult = await cloudinary.uploader.upload(file.path, {
+        folder: 'category',
+        public_id: 'category_' + Date.now(),
+      });
+
+      uploadedImages.push(uploadResult.secure_url);
+      fs.unlinkSync(file.path); // delete local file
+    }
+
+    console.log("📦 Uploaded images:", uploadedImages);
+
+    // ✅ Attach uploaded images to req for next middleware
+    req.uploadedImages = uploadedImages;
+
+    next(); // 👈 move to createCategory
+  } catch (error) {
+    res.status(500).json({
+      message: 'Image upload failed',
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
+// ✅ Create Category Controller
+const createCategory = async (req, res) => {
+  try {
+    const { name, parentCategoryName, parentCategory } = req.body;
+    const images = req.uploadedImages; // ✅ Access images from previous middleware
+
+    console.log("🚀 Received in createCategory:", images);
+
+    const category = new CategoryModal({
+      name,
+      images,
+      parentCategoryName,
+      parentCategory
+    });
+
+    await category.save();
+
+    return res.status(201).json({
+      message: 'Category created successfully',
+      category,
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Category not created',
+      error: error.message,
+      success: false,
+    });
+  }
+};
+// Get Category
+const getCategory=async(req,res)=>{
+   try {
+    const category=await CategoryModal.find();
+    console.log("🚀 ~ getCategory ~ category:", category)
+    res.send("ok")
+    
+   } catch (error) {
+    res.status(500).json({message:"Not found"})
+   } 
+}
+module.exports = {
+  uploadImage,
+  createCategory,
+  getCategory
+};

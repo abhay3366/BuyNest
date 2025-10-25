@@ -8,6 +8,9 @@ const connect = require("./config/db");
 
 // import routes
 const userRouter=require("../src/modules/users/user.route");
+const categoryRouter=require("../src/modules/category/category.route");
+
+
 const auth = require("../middleware/auth");
 
 const app=express();
@@ -25,8 +28,8 @@ app.use(helmet({
 }));
 
 // Define routes
-
 app.use("/users",userRouter)
+app.use("/category",categoryRouter)
 
 
 app.get("/",(req,res)=>{

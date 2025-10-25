@@ -12,6 +12,7 @@ const getDataUrl = require('../../../utils/bufferGenerator.js')
 // const cloudinary = require('cloudinary').v2;
 const cloudinary=require("../../config/cloudinary.js")
 const auth = require('../../../middleware/auth.js')
+const fs=require("fs");
 
 
 require("dotenv").config();
@@ -109,9 +110,6 @@ app.post("/login", async (req, res) => {
         if (!isMatch) {
             return res.status(404).json({ message: "Invalid Credential" })
         }
-
-
-
         const token = jwt.sign(
             { userId: user._id, name: user.name },
             process.env.JWT_SECRET,
@@ -219,12 +217,21 @@ app.post("/reset-password", async (req, res) => {
 // 
 
 // upload avatar to cloudinary
-app.post("/avatar/cloudinary",upload.array("files", 10), async (req, res) => {
+app.post("/avatar/cloudinary",auth, upload.array("files", 10), async (req, res) => {
   try {
     const files = req.files; // array of files
-    console.log("🚀 ~ files:", files);
+  
 
+    const user=await User.findById(req.token.userId);
+    await cloudinary.uploader.destroy(user.avatar_public_id);
+   
+    // await cloudinary.uploader.destroy(uploadResults[0]);
+    
+    if(!user){
+        res.status(500).json({message:"User not found", error:true,success:false})
+    }
     const uploadResults = [];
+ 
 
     for (const file of files) {
       const uploadResult = await cloudinary.uploader.upload(file.path, {
@@ -233,6 +240,12 @@ app.post("/avatar/cloudinary",upload.array("files", 10), async (req, res) => {
       });
       uploadResults.push(uploadResult);
     }
+        // delete the local file after upload if needed
+        fs.unlinkSync(files[0].path);   
+
+    user.avatar=uploadResults[0].secure_url;
+    user.avatar_public_id=uploadResults[0].public_id;
+    await user.save();
 
     res.status(200).json({
       message: "All files uploaded successfully!",
@@ -244,20 +257,73 @@ app.post("/avatar/cloudinary",upload.array("files", 10), async (req, res) => {
   }
 });
 // remove imge from cloudinary
-app.delete("/avatar/cloudinary/delete", async (req, res) => {
+app.delete("/avatar/cloudinary/delete", auth, async (req, res) => {
     try {
         const { public_id } = req.body;
-        console.log("🚀 ~ public_id:", public_id)
+        if(req.token.userId===undefined)return res.status(401).json({message:"Unauthorized user"});
+        
         if (!public_id) {
             return res.status(400).json({ message: "Public ID is required" });
         }
 
         const result = await cloudinary.uploader.destroy(public_id);
+
+        const user=await User.findById(req.token.userId);
+        user.avatar="";
+        await user.save();
+       
         res.status(200).json({ message: "Image deleted successfully", result });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 })
+
+// app.update("/update-user", auth, async (req, res) => {
+//     try {
+//         const userId = req.token.userId;
+//         const {name,email,password,mobile}= req.body;
+//         const user=await User.findById(userId);
+//         if(!user){
+//             return res.status(404).json({message:"User not found"});
+//         }
+//         user.name=name||user.name;
+//         user.email=email||user.email
+//         user.mobile=mobile||user.mobile
+//         if(password){
+//             const hashedPassword=await bcrypt.hash(password, 10);
+//             const isMatch=await bcrypt.compare(password,user.password);
+//             if(isMatch){
+//                 return res.status(400).json({message:"New password cannot be same as old password"});
+//             }
+//             const otp=Math.floor((Math.random*900000)+100000).toString();
+//             const jwtToken=jwt.sign(
+//                 {userId:user._id, name:user.name, hashedPassword, otp},process.env.JWT_SECRET,{expiresIn:'1h'}
+//             )
+           
+//              await transporter.sendMail({
+//             from: process.env.EMAIL_USER,
+//             to: email,
+//             subject: "Update Reset OTP",
+//             html: `
+//                 <h3>Hello,</h3>
+//                 <p>You recently requested to update your account.</p>
+//                 <p>Your OTP is:</p>
+//                 <h2 style="color:#2e86de;">${otp}</h2>
+//                 <p>Valid for <strong>1 hour</strong>.</p>
+//                 <p>If you didn’t request this, please ignore this email.</p>
+//             `
+//         });
+
+//         res.status(200).json({
+//             message: "OTP sent to your email. Please verify to update password.",
+//             token: jwtToken,
+//             success: true
+//         });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// })
 
 
 app.post("/logout", async (req, res) => {
