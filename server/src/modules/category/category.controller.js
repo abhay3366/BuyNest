@@ -1,6 +1,8 @@
 const cloudinary = require('../../config/cloudinary');
 const fs = require('fs');
 const CategoryModal = require('./category.modal');
+const { error } = require('console');
+const { response } = require('express');
 
 // ✅ Upload Image Middleware
 const uploadImage = async (req, res, next) => {
@@ -93,8 +95,27 @@ const getCategory=async (req, res) => {
   }
 
 }
+
+// get category count
+const getCategoryCount=async(req,res)=>{
+    try {
+        const categoryCount=await CategoryModal.countDocuments()
+        if(!categoryCount){
+            res.status(500).json({success:false,error:true})
+        }else{
+            res.status(200).json({
+                categoryCount:categoryCount
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({message:error.message,error:true,success:false})
+    }
+}
+
+
 module.exports = {
   uploadImage,
   createCategory,
-  getCategory
+  getCategory,
+  getCategoryCount
 };

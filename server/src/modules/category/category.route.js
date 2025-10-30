@@ -2,7 +2,7 @@ const express=require("express");
 const upload = require("../../../middleware/multer");
 
 const auth=require("../../../middleware/auth");
-const { uploadImage, createCategory, getCategory } = require("./category.controller");
+const { uploadImage, createCategory, getCategory, getCategoryCount } = require("./category.controller");
 
 
 const app=express.Router();
@@ -10,6 +10,6 @@ const app=express.Router();
 // app.post("/create",createCategory);
 app.post("/createCateogry", upload.array("images", 10), uploadImage, createCategory);
 app.get("/getCategory",getCategory)
-
+app.get("/get/count",getCategoryCount)
 
 module.exports=app;
