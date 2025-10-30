@@ -36,7 +36,7 @@ const uploadImage = async (req, res, next) => {
 // ✅ Create Category Controller
 const createCategory = async (req, res) => {
   try {
-    const { name, parentCategoryName, parentCategory } = req.body;
+    const { name,parentCategory } = req.body;
     const images = req.uploadedImages; // ✅ Access images from previous middleware
 
     console.log("🚀 Received in createCategory:", images);
@@ -44,7 +44,6 @@ const createCategory = async (req, res) => {
     const category = new CategoryModal({
       name,
       images,
-      parentCategoryName,
       parentCategory
     });
 
@@ -64,15 +63,35 @@ const createCategory = async (req, res) => {
   }
 };
 // Get Category
-const getCategory=async(req,res)=>{
-   try {
-    const category=await CategoryModal.find();
-    console.log("🚀 ~ getCategory ~ category:", category)
-    res.send("ok")
-    
-   } catch (error) {
-    res.status(500).json({message:"Not found"})
-   } 
+const getCategory=async (req, res) => {
+  try {
+    // fetch all categories as plain JS objects
+    const categories = await CategoryModal.find().populate("parentCategory");
+    // console.log("🚀 ~ getCategory ~ categories:", categories)
+
+    // recursive function to build tree
+    const buildTree = (parentId = null) => {
+      return categories
+        .filter(cat => {
+          console.log("🚀 ~ buildTree ~ cat:", cat)
+        
+          const pid = cat.parentCategory?._id || cat.parentCategory;
+          return String(pid) === String(parentId);
+        })
+        .map(cat => ({
+          _id: cat._id,
+          name: cat.name,
+          children: buildTree(cat._id)
+        }));
+    };
+
+    const categoryTree = buildTree();
+    res.json({ success: true, categoryTree });
+
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+
 }
 module.exports = {
   uploadImage,
