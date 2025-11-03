@@ -217,9 +217,10 @@ app.post("/reset-password", async (req, res) => {
 // 
 
 // upload avatar to cloudinary
-app.post("/avatar/cloudinary",auth, upload.array("files", 10), async (req, res) => {
+app.post("/avatar/cloudinary",auth, upload.array("avatar", 10), async (req, res) => {
   try {
     const files = req.files; // array of files
+    console.log("🚀 ~ files:", files)
   
 
     const user=await User.findById(req.token.userId);

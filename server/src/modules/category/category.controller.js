@@ -38,7 +38,7 @@ const uploadImage = async (req, res, next) => {
 // ✅ Create Category Controller
 const createCategory = async (req, res) => {
   try {
-    const { name,parentCategory } = req.body;
+    const { name, parentCategory } = req.body;
     const images = req.uploadedImages; // ✅ Access images from previous middleware
 
     console.log("🚀 Received in createCategory:", images);
@@ -65,7 +65,7 @@ const createCategory = async (req, res) => {
   }
 };
 // Get Category
-const getCategory=async (req, res) => {
+const getCategory = async (req, res) => {
   try {
     // fetch all categories as plain JS objects
     const categories = await CategoryModal.find().populate("parentCategory");
@@ -76,7 +76,7 @@ const getCategory=async (req, res) => {
       return categories
         .filter(cat => {
           console.log("🚀 ~ buildTree ~ cat:", cat)
-        
+
           const pid = cat.parentCategory?._id || cat.parentCategory;
           return String(pid) === String(parentId);
         })
@@ -97,50 +97,109 @@ const getCategory=async (req, res) => {
 }
 
 // get category count
-const getCategoryCount=async(req,res)=>{
-    try {
-        const categoryCount=await CategoryModal.countDocuments({parentCategory:null})
-        if(!categoryCount){
-            res.status(500).json({success:false,error:true})
-        }else{
-            res.status(200).json({
-                categoryCount:categoryCount
-            })
-        }
-    } catch (error) {
-        return res.status(500).json({message:error.message,error:true,success:false})
+const getCategoryCount = async (req, res) => {
+  try {
+    const categoryCount = await CategoryModal.countDocuments({ parentCategory: null })
+    if (!categoryCount) {
+      res.status(500).json({ success: false, error: true })
+    } else {
+      res.status(200).json({
+        categoryCount: categoryCount
+      })
     }
+  } catch (error) {
+    return res.status(500).json({ message: error.message, error: true, success: false })
+  }
 }
 // get subcategory count
-const getSubCategoryCount=async(req,res)=>{
-    try {
-        const subcategoryCount=await CategoryModal.countDocuments({parentCategory: !null})
-        if(!categoryCount){
-            res.status(500).json({success:false,error:true})
-        }else{
-            res.status(200).json({
-                subcategoryCount:subcategoryCount
-            })
-        }
-    } catch (error) {
-        return res.status(500).json({message:error.message,error:true,success:false})
+const getSubCategoryCount = async (req, res) => {
+  try {
+    const subcategoryCount = await CategoryModal.countDocuments({ parentCategory: !null })
+    if (!categoryCount) {
+      res.status(500).json({ success: false, error: true })
+    } else {
+      res.status(200).json({
+        subcategoryCount: subcategoryCount
+      })
     }
+  } catch (error) {
+    return res.status(500).json({ message: error.message, error: true, success: false })
+  }
 }
 // get single category
-const getSingleCategory=async(req,res)=>{
-  try{
-    const category=await CategoryModal.findById(req.params.id);
-    if(!category){
-    res.status(500).json({message:"The category with this id not found"})
+const getSingleCategory = async (req, res) => {
+  try {
+    const category = await CategoryModal.findById(req.params.id);
+    if (!category) {
+      res.status(500).json({ message: "The category with this id not found" })
     }
     return res.status(200).json({
-      error:false,
-      success:true,
-      category:category
+      error: false,
+      success: true,
+      category: category
     })
-  }catch(error){
-    res.status(500).json({error:error.error})
+  } catch (error) {
+    res.status(500).json({ error: error.error })
   }
+}
+// remove imge from cloudinary
+const removeImageFromCloudinary = async (req, res) => {
+  const { public_id } = req.body;
+  try {
+    const { public_id } = req.body;
+    if (req.token.userId === undefined) return res.status(401).json({ message: "Unauthorized user" });
+
+    if (!public_id) {
+      return res.status(400).json({ message: "Public ID is required" });
+    }
+
+    const result = await cloudinary.uploader.destroy(public_id);
+
+    const user = await User.findById(req.token.userId);
+    user.avatar = "";
+    await user.save();
+
+    res.status(200).json({ message: "Image deleted successfully", result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+// delete category
+const deleteCategory = async (req, res) => {
+
+  try {
+    // Check whether category with this ID exists
+    const category = await CategoryModal.findById(req.params.id)
+    const images = category.images;
+    console.log("🚀 ~ deleteCategory ~ images:", images)
+ // Delete all images from Cloudinary
+    for (const img of images) {
+      const imgUrl = img;
+
+      const urlArr = imgUrl.split("/");
+      const imageNameWithExtension = urlArr[urlArr.length - 1];
+      const imageName = imageNameWithExtension.split(".")[0];
+
+      const imageFolder = urlArr[urlArr.length - 2];
+      await cloudinary.uploader.destroy(imageName);
+      console.log(`Deleted image: ${imageName}`);
+    }
+     // Delete category from database
+      await CategoryModal.findByIdAndDelete(req.params.id);
+    // Delete subcategories
+      const subcategories =await CategoryModal.find({parentCategory:req.params.id})
+     for (const sub of subcategories) {
+      await CategoryModal.findByIdAndDelete(sub._id);
+      console.log(`Deleted subcategory: ${sub._id}`);
+    }
+        res.status(200).json({ message: "Category, images, and subcategories deleted successfully" });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+
+  }
+
 }
 
 
@@ -151,4 +210,6 @@ module.exports = {
   getCategoryCount,
   getSubCategoryCount,
   getSingleCategory,
+  removeImageFromCloudinary,
+  deleteCategory
 };
