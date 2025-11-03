@@ -2,7 +2,7 @@ const express=require("express");
 const upload = require("../../../middleware/multer");
 
 const auth=require("../../../middleware/auth");
-const { uploadImage, createCategory, getCategory, getCategoryCount, getSubCategoryCount, getSingleCategory, removeImageFromCloudinary, deleteCategory } = require("./category.controller");
+const { uploadImage, createCategory, getCategory, getCategoryCount, getSubCategoryCount, getSingleCategory, removeImageFromCloudinary, deleteCategory, updateCategory } = require("./category.controller");
 
 
 const app=express.Router();
@@ -15,5 +15,6 @@ app.get("/get/subcategory/count",getSubCategoryCount)
 app.get("/:id",getSingleCategory)
 app.delete("/cloudinaryimg/delete",auth,removeImageFromCloudinary)
 app.delete("/delete/:id",deleteCategory)
+app.post("/update/:id",upload.array("images", 10),updateCategory);
 
 module.exports=app;

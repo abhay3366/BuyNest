@@ -202,6 +202,66 @@ const deleteCategory = async (req, res) => {
 
 }
 
+//  update category
+const updateCategory = async (req, res) => {
+  try {
+    const { name, parentCategory } = req.body;
+    const newImages = req.files; // if using multer for file upload
+    console.log("🚀 ~ updateCategory ~ newImages:", newImages);
+
+    const category = await CategoryModal.findById(req.params.id);
+    if (!category) {
+      return res.status(404).json({
+        message: "Category not found",
+        success: false,
+      });
+    }
+
+    // 1️⃣ Delete old images from Cloudinary
+    if (category.images && category.images.length > 0) {
+      for (const imgUrl of category.images) {
+        const urlArr = imgUrl.split("/");
+        const imageNameWithExtension = urlArr[urlArr.length - 1];
+        const imageName = imageNameWithExtension.split(".")[0];
+        await cloudinary.uploader.destroy(imageName);
+        console.log(`Deleted old image: ${imageName}`);
+      }
+    }
+
+    // 2️⃣ Upload new images to Cloudinary and get URLs
+    let imageUrls = [];
+    if (newImages && newImages.length > 0) {
+      for (const file of newImages) {
+        const uploadResult = await cloudinary.uploader.upload(file.path, {
+          folder: "categories",
+        });
+        imageUrls.push(uploadResult.secure_url);
+      }
+    }
+
+    // 3️⃣ Update category in DB
+    category.name = name || category.name;
+    category.parentCategory = parentCategory || category.parentCategory;
+    if (imageUrls.length > 0) category.images = imageUrls;
+
+    await category.save();
+
+    res.status(200).json({
+      message: "Category updated successfully",
+      success: true,
+      category,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Something went wrong",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+
 
 module.exports = {
   uploadImage,
@@ -211,5 +271,6 @@ module.exports = {
   getSubCategoryCount,
   getSingleCategory,
   removeImageFromCloudinary,
-  deleteCategory
+  deleteCategory,
+  updateCategory
 };
