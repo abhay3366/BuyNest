@@ -99,7 +99,7 @@ const getCategory=async (req, res) => {
 // get category count
 const getCategoryCount=async(req,res)=>{
     try {
-        const categoryCount=await CategoryModal.countDocuments()
+        const categoryCount=await CategoryModal.countDocuments({parentCategory:null})
         if(!categoryCount){
             res.status(500).json({success:false,error:true})
         }else{
@@ -111,11 +111,44 @@ const getCategoryCount=async(req,res)=>{
         return res.status(500).json({message:error.message,error:true,success:false})
     }
 }
+// get subcategory count
+const getSubCategoryCount=async(req,res)=>{
+    try {
+        const subcategoryCount=await CategoryModal.countDocuments({parentCategory: !null})
+        if(!categoryCount){
+            res.status(500).json({success:false,error:true})
+        }else{
+            res.status(200).json({
+                subcategoryCount:subcategoryCount
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({message:error.message,error:true,success:false})
+    }
+}
+// get single category
+const getSingleCategory=async(req,res)=>{
+  try{
+    const category=await CategoryModal.findById(req.params.id);
+    if(!category){
+    res.status(500).json({message:"The category with this id not found"})
+    }
+    return res.status(200).json({
+      error:false,
+      success:true,
+      category:category
+    })
+  }catch(error){
+    res.status(500).json({error:error.error})
+  }
+}
 
 
 module.exports = {
   uploadImage,
   createCategory,
   getCategory,
-  getCategoryCount
+  getCategoryCount,
+  getSubCategoryCount,
+  getSingleCategory,
 };
