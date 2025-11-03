@@ -9,6 +9,7 @@ const connect = require("./config/db");
 // import routes
 const userRouter=require("../src/modules/users/user.route");
 const categoryRouter=require("../src/modules/category/category.route");
+const productRouter=require("../src/modules/product/product.route")
 
 
 const auth = require("../middleware/auth");
@@ -30,6 +31,7 @@ app.use(helmet({
 // Define routes
 app.use("/users",userRouter)
 app.use("/category",categoryRouter)
+app.use("/product",productRouter)
 
 
 app.get("/",(req,res)=>{

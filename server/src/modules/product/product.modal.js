@@ -1,0 +1,86 @@
+const mongoose=require('mongoose');
+// create a schema
+const productSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
+     description:{
+        type:String,
+        required:true
+    },
+    images:{
+        type:Array,
+        default:[]
+    },
+    brand:{
+        type:String,
+        default:""
+    },
+    price:{
+        type:Number,
+        default:0
+    },
+    oldPrice:{
+        type:Number,
+        default:0
+    },
+     catName:{
+        type:String,
+        default:""
+    },
+    catId:{
+        type:String,
+        default:""
+    },
+    subCatId:{
+        type:String,
+        default:""
+    },
+     subCat:{
+        type:String,
+        default:""
+    },
+     subCatName:{
+        type:String,
+        default:""
+    },
+    categroy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Categoy",
+        required:true
+    },
+    countInStock:{
+        type:Number,
+        required:true
+    },
+     rating:{
+        type:Number,
+        default:0
+    },
+     inFeatured:{
+        type:Number,
+        default:false
+    },
+     discount:{
+        type:Number,
+       default:0
+    },
+    size:{
+        type:Array,
+        default:[]
+    },
+    productWeight:{
+        type:Array,
+        default:[]
+    },
+    dateCreated:{
+        type:Date,
+        default:Date.now()
+    }
+},{timestamps:true})
+
+// create a modal
+const ProductModal=mongoose.model("product",productSchema);
+
+module.exports=ProductModal;
