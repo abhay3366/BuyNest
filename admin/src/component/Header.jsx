@@ -1,23 +1,27 @@
-import { CiMenuFries } from "react-icons/ci";
-import { FaRegBell } from "react-icons/fa";
-import Badge from '@mui/material/Badge';
+import { useState } from 'react';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import { RxHamburgerMenu } from "react-icons/rx";
+import Badge from "@mui/material/Badge";
+import { FaCartShopping, FaRegBell } from "react-icons/fa6";
+
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+// import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 
-import { IoLogOutOutline } from "react-icons/io5";
-import { CgProfile } from "react-icons/cg";
 
-import { useState } from "react";
-import Divider from "@mui/material/Divider";
-import { useDispatch, useSelector } from "react-redux";
-import { toggle } from "../utils/sidebarSlice";
-import { Button } from "@mui/material";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const dispatch = useDispatch()
-  const isLogin=useSelector((state)=>state.loginReducer.isLogin)
-  console.log(isLogin)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,67 +30,96 @@ const Header = () => {
     setAnchorEl(null);
   };
   return (
-    <header className="w-full h-[64px] pr-7 bg-[white] flex items-center justify-between shadow-sm dark:shadow-2xl">
-      <div className="part1  w-[15%] flex items-center justify-end">
-        <button onClick={() => dispatch(toggle())} className="w-[40px] h-[40px]   rounded-full flex items-center justify-center cursor-pointer">
-          <CiMenuFries className="text-[22px] text-[rgba(0,0,0,0.8)]" />
-        </button>
+    <div className='w-full h-[50px] w-[50px] pl-64 bg-[#f1f1f1] flex items-center justify-between'>
+      <div className='part1'>
+        <Button variant="text"><RxHamburgerMenu /></Button>
       </div>
 
-      <div className="part2 w-[40%] flex items-center justify-end gap-4">
-        <button className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-pointer">
-          <Badge badgeContent={4} color="warning">
-            <FaRegBell className="text-[22px] text-[rgba(0,0,0,0.8)]" />
+      <div className='part2 mr-10'>
+        <IconButton aria-label='cart'>
+          <Badge badgeContent={4} color="secondary">
+            {/* <FaCartShopping /> */}
+            <FaRegBell />
           </Badge>
-        </button>
-
-       {
-        isLogin ? ( <div className="rounded-full w-[35px] h-[35px] cursor-pointer">
-          <img onClick={handleClick} src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png" alt="" />
-
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleClose}
-            onClick={handleClose}
-
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem onClick={handleClose}>
-              <div className="flex items-center gap-3">
-                <div className="rounded-full overflow-hidden cursor-pointer flex items-center gap-2">
-                  <img src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png" className="w-[35px] h-[35px]" alt="" />
-                  <div>
-                    <h1 className="text-[14px]">Abhay Kant Tiwari</h1>
-                    <p className="text-[11px] text-gray-400">tabhaykant2@gmail.com</p>
-                  </div>
-                </div>
-              </div>
-            </MenuItem>
-            <Divider />
-            <MenuItem>
-              <div className="flex items-center gap-2">
-                <CgProfile />
-                <span>Profile</span>
-              </div>
-            </MenuItem>
-            <MenuItem>
-              <div className="flex items-center gap-2">
-                <IoLogOutOutline />
-                <span>Logout</span>
-              </div>
-            </MenuItem>
-
-
-
-          </Menu>
-        </div>) : (<Button className="!bg-[#2B7FFF] !text-white !rounded-4xl">Sign In</Button>)
-       }
+        </IconButton>
+        <Tooltip title="Account settings">
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? 'account-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+            >
+              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            </IconButton>
+          </Tooltip>
+        <Menu
+          anchorEl={anchorEl}
+          id="account-menu"
+          open={open}
+          onClose={handleClose}
+          onClick={handleClose}
+          slotProps={{
+            paper: {
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&::before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            },
+          }}
+          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        >
+          <MenuItem onClick={handleClose}>
+            <Avatar /> Profile
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Avatar /> My account
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <PersonAdd fontSize="small" />
+            </ListItemIcon>
+            Add another account
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Menu>
       </div>
-    </header>
-  );
-};
+    </div>
+  )
+}
 
-export default Header;
+export default Header
